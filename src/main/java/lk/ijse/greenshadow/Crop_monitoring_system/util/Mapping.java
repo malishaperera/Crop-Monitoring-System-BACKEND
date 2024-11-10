@@ -16,17 +16,17 @@ public class Mapping {
     /*------------------------------------------------Field---------------------------------------------------*/
 
     //FieldEntity covert FieldDTO
-    public FieldDTO convertToDTO(FieldEntity field) {
+    public FieldDTO convertToFieldDTO(FieldEntity field) {
         return modelMapper.map(field, FieldDTO.class);
     }
 
     //FieldDTO covert FieldEntity
-    public FieldEntity convertToEntity(FieldDTO dto) {
+    public FieldEntity convertToFieldEntity(FieldDTO dto) {
         return modelMapper.map(dto, FieldEntity.class);
     }
 
     //FieldEntity list convert FieldDTO
-    public List<FieldDTO> convertToDTO(List<FieldEntity> fields) {
+    public List<FieldDTO> convertToFieldDTOList(List<FieldEntity> fields) {
         return modelMapper.map(fields, List.class);
     }
 

@@ -1,5 +1,6 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/fields")
@@ -132,4 +134,18 @@ public class FieldController {
         }
     }
 
+
+
+    //Get Field
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldResponse getSelectedField(@PathVariable("id") String fieldCode){
+        return fieldService.getSelectField(fieldCode);
+    }
+
+
+    //Get All Field
+    @GetMapping(value = "allFields", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<FieldDTO> getAllFields() {
+        return fieldService.getAllFields();
+    }
 }

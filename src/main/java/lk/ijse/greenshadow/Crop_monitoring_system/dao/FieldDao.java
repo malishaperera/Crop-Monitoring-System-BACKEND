@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface FieldDao extends JpaRepository<FieldEntity, String> {
+
     @Query("SELECT i.fieldCode FROM FieldEntity i ORDER BY i.fieldCode DESC")
     List<String> findLastFieldCode();
+
+    FieldEntity getFieldEntityByFieldCode(String fieldCode);
 }

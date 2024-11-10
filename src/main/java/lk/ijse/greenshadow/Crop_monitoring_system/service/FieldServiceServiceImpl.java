@@ -1,6 +1,8 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.service;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldErrorResponse;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
@@ -10,7 +12,10 @@ import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +37,7 @@ public class FieldServiceServiceImpl implements FieldService{
         String lastFieldCode = fieldCode.isEmpty() ? null : fieldCode.get(0);
         fieldDTO.setFieldCode(AppUtil.generateNextFieldId(lastFieldCode));
 
-        FieldEntity isSaveField = fieldDao.save(mapping.convertToEntity(fieldDTO));
+        FieldEntity isSaveField = fieldDao.save(mapping.convertToFieldEntity(fieldDTO));
 
         if (isSaveField == null) {
             throw new DataPersistFailedException("Cannot save data");
@@ -58,6 +63,7 @@ public class FieldServiceServiceImpl implements FieldService{
         }
     }
 
+    //Field Delete
     @Override
     public void deleteField(String fieldCode) {
         Optional<FieldEntity> selectedFieldId = fieldDao.findById(fieldCode);
@@ -66,5 +72,24 @@ public class FieldServiceServiceImpl implements FieldService{
         }else {
             fieldDao.deleteById(fieldCode);
         }
+    }
+
+
+    //Field Get
+    @Override
+    public FieldResponse getSelectField(String fieldCode) {
+        if (fieldDao.existsById(fieldCode)) {
+            FieldEntity fieldEntityByFieldCode = fieldDao.getFieldEntityByFieldCode(fieldCode);
+            return mapping.convertToFieldDTO(fieldEntityByFieldCode);
+        }else {
+            return new FieldErrorResponse(0,"Field not found");
+        }
+    }
+
+    //Field GetAll
+    @Override
+    public List<FieldDTO> getAllFields() {
+        List<FieldEntity> getAllFields = fieldDao.findAll();
+        return mapping.convertToFieldDTOList(getAllFields);
     }
 }
