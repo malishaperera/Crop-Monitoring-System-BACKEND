@@ -6,4 +6,6 @@ public interface FieldService {
     void saveField(FieldDTO buildFieldDTO);
 
     void updateField(FieldDTO updateField);
+
+    void deleteField(String fieldCode);
 }
