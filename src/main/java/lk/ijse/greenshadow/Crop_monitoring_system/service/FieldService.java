@@ -4,4 +4,6 @@ import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 
 public interface FieldService {
     void saveField(FieldDTO buildFieldDTO);
+
+    void updateField(FieldDTO updateField);
 }

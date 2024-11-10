@@ -2,6 +2,7 @@ package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
+import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.FieldService;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,7 @@ public class FieldController {
             byte[] imageByteCollection1 = fieldImage1.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
-            byte[] imageByteCollection2 = fieldImage1.getBytes();
+            byte[] imageByteCollection2 = fieldImage2.getBytes();
             String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
 
@@ -67,6 +68,52 @@ public class FieldController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             System.err.println("Error occurred while saving item: " + e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    //Update Field
+    @PatchMapping(value = "/{fieldCode}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateItem(
+            @PathVariable("fieldCode") String fieldCode,
+            @RequestParam("fieldName") String fieldName,
+            @RequestParam("fieldLocation") String  fieldLocation,
+            @RequestParam("fieldSize") double fieldSize,
+            @RequestParam("fieldImage1") MultipartFile fieldImage1,
+            @RequestParam("fieldImage2") MultipartFile fieldImage2){
+
+        try {
+
+            String[] coords = fieldLocation.split(",");
+            int x = Integer.parseInt(coords[0]);
+            int y = Integer.parseInt(coords[1]);
+            Point fieldLocationP = new Point(x, y);
+
+
+            byte[] imageByteCollection1 = fieldImage1.getBytes();
+            String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
+
+            byte[] imageByteCollection2 = fieldImage1.getBytes();
+            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection1);
+
+
+            FieldDTO updateField = new FieldDTO();
+            updateField.setFieldCode(fieldCode);
+            updateField.setFieldName(fieldName);
+            updateField.setFieldLocation(fieldLocationP);
+            updateField.setFieldSize(fieldSize);
+            updateField.setFieldImage1(base64ProfilePic1);
+            updateField.setFieldImage2(base64ProfilePic2);
+
+            fieldService.updateField(updateField);
+
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (FieldNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            System.err.println("Error occurred while updating item: " + e.getMessage());
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
