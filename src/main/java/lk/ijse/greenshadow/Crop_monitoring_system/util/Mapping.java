@@ -3,9 +3,11 @@ package lk.ijse.greenshadow.Crop_monitoring_system.util;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.EquipmentDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
+import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.StaffDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.CropEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.EquipmentEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,9 +38,6 @@ public class Mapping {
                 .map(this::convertToFieldDTO)
                 .toList();
     }
-
-
-
 
 
     /*------------------------------------------------Crop---------------------------------------------------*/
@@ -75,6 +74,25 @@ public class Mapping {
     public List<EquipmentDTO> convertToEquipmentDTOList(List<EquipmentEntity> equipmentList) {
         return equipmentList.stream()
                 .map(this::convertToEquipmentDTO)
+                .toList();
+    }
+
+
+    /*------------------------------------------------Staff---------------------------------------------------*/
+// StaffEntity to StaffDTO
+    public StaffDTO convertToStaffDTO(StaffEntity staff) {
+        return modelMapper.map(staff, StaffDTO.class);
+    }
+
+    // StaffDTO to StaffEntity
+    public StaffEntity convertToStaffEntity(StaffDTO dto) {
+        return modelMapper.map(dto, StaffEntity.class);
+    }
+
+    // List<StaffEntity> to List<StaffDTO>
+    public List<StaffDTO> convertToStaffDTOList(List<StaffEntity> staffList) {
+        return staffList.stream()
+                .map(this::convertToStaffDTO)
                 .toList();
     }
 }

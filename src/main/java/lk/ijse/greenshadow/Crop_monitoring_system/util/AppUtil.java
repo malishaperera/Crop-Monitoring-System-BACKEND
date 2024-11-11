@@ -35,4 +35,14 @@ public class AppUtil {
         // Convert image bytes to Base64 string
         return Base64.getEncoder().encodeToString(profilePic);
     }
+
+    // Staff ID Generate
+    public static String generateNextStaffId(String lastStaffId) {
+        if (lastStaffId != null && lastStaffId.startsWith("STAFF-")) {
+            int lastIdNumber = Integer.parseInt(lastStaffId.substring(6));
+            return String.format("STAFF-%03d", lastIdNumber + 1);
+        }
+        return "STAFF-001";
+    }
+
 }

@@ -1,5 +1,6 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldStaffDetailsEntity;
@@ -41,6 +42,7 @@ public class StaffEntity {
     private Date joinedDate;
 
     @Column(name = "date_of_birth")
+//    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date DOB;
 
     @Column(name = "address_line_1")
