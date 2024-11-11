@@ -44,7 +44,6 @@ public class FieldServiceServiceImpl implements FieldService{
         }
 
         System.out.println("Saving FieldEntity:"+isSaveField.getFieldCode()+isSaveField.getFieldName());
-
     }
 
     @Override
@@ -59,7 +58,6 @@ public class FieldServiceServiceImpl implements FieldService{
             tmpField.get().setFieldImage1(updateField.getFieldImage1());
             tmpField.get().setFieldImage2(updateField.getFieldImage2());
             tmpField.get().setFieldCode(updateField.getFieldCode());
-
         }
     }
 
@@ -73,7 +71,6 @@ public class FieldServiceServiceImpl implements FieldService{
             fieldDao.deleteById(fieldCode);
         }
     }
-
 
     //Field Get
     @Override

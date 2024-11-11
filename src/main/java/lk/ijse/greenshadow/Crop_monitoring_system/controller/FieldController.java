@@ -42,19 +42,16 @@ public class FieldController {
             @RequestParam("fieldImage2") MultipartFile fieldImage2){
 
         try {
-
             String[] coords = fieldLocation.split(",");
             int x = Integer.parseInt(coords[0]);
             int y = Integer.parseInt(coords[1]);
             Point fieldLocationP = new Point(x, y);
-
 
             byte[] imageByteCollection1 = fieldImage1.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
             byte[] imageByteCollection2 = fieldImage2.getBytes();
             String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection1);
-
 
             FieldDTO buildFieldDTO = new FieldDTO();
             buildFieldDTO.setFieldName(fieldName);
@@ -75,10 +72,9 @@ public class FieldController {
         }
     }
 
-
     //Update Field
     @PatchMapping(value = "/{fieldCode}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> updateItem(
+    public ResponseEntity<Void> updateCrop(
             @PathVariable("fieldCode") String fieldCode,
             @RequestParam("fieldName") String fieldName,
             @RequestParam("fieldLocation") String  fieldLocation,
@@ -93,13 +89,11 @@ public class FieldController {
             int y = Integer.parseInt(coords[1]);
             Point fieldLocationP = new Point(x, y);
 
-
             byte[] imageByteCollection1 = fieldImage1.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
             byte[] imageByteCollection2 = fieldImage1.getBytes();
             String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection1);
-
 
             FieldDTO updateField = new FieldDTO();
             updateField.setFieldCode(fieldCode);
@@ -134,14 +128,11 @@ public class FieldController {
         }
     }
 
-
-
     //Get Field
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public FieldResponse getSelectedField(@PathVariable("id") String fieldCode){
         return fieldService.getSelectField(fieldCode);
     }
-
 
     //Get All Field
     @GetMapping(value = "allFields", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -27,7 +27,6 @@ public class EquipmentEntity {
     @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private FieldEntity field;
 
-
     @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "staff_member_id", referencedColumnName = "staff_member_id")
     private StaffEntity staff;

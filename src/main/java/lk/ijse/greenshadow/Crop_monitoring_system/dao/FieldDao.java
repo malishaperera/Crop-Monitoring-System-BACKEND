@@ -14,4 +14,6 @@ public interface FieldDao extends JpaRepository<FieldEntity, String> {
     List<String> findLastFieldCode();
 
     FieldEntity getFieldEntityByFieldCode(String fieldCode);
+
+    FieldEntity findByFieldCode(String fieldCode);
 }

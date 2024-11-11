@@ -31,6 +31,7 @@ public class FieldEntity {
     @Column(name = "field_image_2", columnDefinition = "LONGTEXT")
     private String fieldImage2;
 
+
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private java.util.List<CropEntity> cropList = new ArrayList<>();
 
