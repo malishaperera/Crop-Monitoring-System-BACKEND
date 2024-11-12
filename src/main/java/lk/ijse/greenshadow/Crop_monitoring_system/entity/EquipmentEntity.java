@@ -19,7 +19,9 @@ public class EquipmentEntity {
     @Column(name = "equipment_name")
     private String name;
     @Column(name = "equipment_type")
+    @Enumerated(EnumType.STRING)
     private EquipmentTypes equipmentType;
+    @Enumerated(EnumType.STRING)
     @Column(name = "availability_status")
     private Status status;
 

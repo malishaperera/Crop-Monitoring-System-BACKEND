@@ -14,4 +14,6 @@ public interface StaffDao extends JpaRepository<StaffEntity, String> {
 
     @Query("SELECT i.staffMemberId FROM StaffEntity i ORDER BY i.staffMemberId DESC")
     List<String> findLastStaffMemberId();
+
+    StaffEntity findByStaffMemberId(String staffMemberId);
 }
