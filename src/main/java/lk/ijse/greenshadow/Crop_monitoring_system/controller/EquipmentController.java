@@ -1,5 +1,6 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.EquipmentDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.StaffDao;
@@ -21,6 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/equipments")
@@ -105,13 +108,6 @@ public class EquipmentController {
         }
     }
 
-
-
-
-
-
-
-
     //Delete Equipment
     @DeleteMapping(value = "/{equipmentId}")
     public ResponseEntity<Void> deleteEquipment(@PathVariable("equipmentId") String equipmentId){
@@ -124,4 +120,21 @@ public class EquipmentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    //Get Equipment
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public EquipmentResponse getSelectEquipment(@PathVariable("id") String equipmentId){
+        return equipmentService.getSelectEquipment(equipmentId);
+    }
+
+    //Get All Customers
+    @GetMapping(value = "allEquipments", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<EquipmentDTO> getAllEquipments(){
+        return equipmentService.getAllEquipment();
+    }
+
+
+
+    //Get-All Equipment
 }

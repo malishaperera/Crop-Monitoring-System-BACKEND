@@ -1,10 +1,13 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.service;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentErrorResponse;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.EquipmentDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.StaffDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.EquipmentDTO;
+import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.EquipmentEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
@@ -73,61 +76,49 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
     }
 
+    @Override
+    public void updateEquipment(String equipmentId, EquipmentDTO equipmentDTO) {
+        try {
+            // Check if the equipment with the given ID exists
+            Optional<EquipmentEntity> tmpEquipmentEntity = equipmentDao.findById(equipmentId);
+            if (!tmpEquipmentEntity.isPresent()) {
+                throw new EquipmentNotFoundException("Equipment not found");
+            }
 
+            EquipmentEntity existingEquipment = tmpEquipmentEntity.get();
 
-//    @Override
-@Override
-public void updateEquipment(String equipmentId, EquipmentDTO equipmentDTO) {
-    try {
-        // Check if the equipment with the given ID exists
-        Optional<EquipmentEntity> tmpEquipmentEntity = equipmentDao.findById(equipmentId);
-        if (!tmpEquipmentEntity.isPresent()) {
-            throw new EquipmentNotFoundException("Equipment not found");
+            // Get the staff member by staffMemberId
+            StaffEntity staff = staffDao.findByStaffMemberId(equipmentDTO.getStaff().getStaffMemberId());
+            if (staff == null) {
+                throw new DataPersistFailedException("Staff not found");
+            }
+
+            // Check if the staff is assigned to any other equipment (other than the one being updated)
+            // Find if there is any equipment assigned to this staff member (excluding the current one)
+            Optional<EquipmentEntity> staffAssignedEquipment = equipmentDao.findByStaff_StaffMemberIdAndEquipmentIdNot(
+                    equipmentDTO.getStaff().getStaffMemberId(), equipmentId);
+
+            if (staffAssignedEquipment.isPresent()) {
+                // If staff is assigned to another equipment (excluding the one being updated), block the update
+                throw new DataPersistFailedException("Staff member is already assigned to another equipment");
+            }
+
+            // Update the existing equipment
+            existingEquipment.setName(equipmentDTO.getName());
+            existingEquipment.setEquipmentType(equipmentDTO.getEquipmentType());
+            existingEquipment.setStatus(equipmentDTO.getStatus());
+            existingEquipment.setField(equipmentDTO.getField());
+            existingEquipment.setStaff(staff);
+
+            // Save the updated equipment
+            equipmentDao.save(existingEquipment);
+
+        } catch (DataPersistFailedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Unexpected error occurred while updating equipment", e);
         }
-
-        EquipmentEntity existingEquipment = tmpEquipmentEntity.get();
-
-        // Get the staff member by staffMemberId
-        StaffEntity staff = staffDao.findByStaffMemberId(equipmentDTO.getStaff().getStaffMemberId());
-        if (staff == null) {
-            throw new DataPersistFailedException("Staff not found");
-        }
-
-        // Check if the staff is assigned to any other equipment (other than the one being updated)
-        // Find if there is any equipment assigned to this staff member (excluding the current one)
-        Optional<EquipmentEntity> staffAssignedEquipment = equipmentDao.findByStaff_StaffMemberIdAndEquipmentIdNot(
-                equipmentDTO.getStaff().getStaffMemberId(), equipmentId);
-
-        if (staffAssignedEquipment.isPresent()) {
-            // If staff is assigned to another equipment (excluding the one being updated), block the update
-            throw new DataPersistFailedException("Staff member is already assigned to another equipment");
-        }
-
-        // Update the existing equipment
-        existingEquipment.setName(equipmentDTO.getName());
-        existingEquipment.setEquipmentType(equipmentDTO.getEquipmentType());
-        existingEquipment.setStatus(equipmentDTO.getStatus());
-        existingEquipment.setField(equipmentDTO.getField());
-        existingEquipment.setStaff(staff); // Assign the staff member to the equipment
-
-        // Save the updated equipment
-        equipmentDao.save(existingEquipment);
-
-    } catch (DataPersistFailedException e) {
-        throw e;
-    } catch (Exception e) {
-        throw new RuntimeException("Unexpected error occurred while updating equipment", e);
     }
-}
-
-
-
-
-
-
-
-
-
 
     @Override
     public void deleteEquipment(String equipmentId) {
@@ -138,6 +129,25 @@ public void updateEquipment(String equipmentId, EquipmentDTO equipmentDTO) {
             equipmentDao.deleteById(equipmentId);
         }
     }
+
+    @Override
+    public EquipmentResponse getSelectEquipment(String equipmentId) {
+        if (equipmentDao.existsById(equipmentId)) {
+           EquipmentEntity equipment  = equipmentDao.getEquipmentEntityByEquipmentId(equipmentId);
+           return mapping.convertToEquipmentDTO(equipment);
+        }else {
+            return new EquipmentErrorResponse(0,"Equipment not found");
+        }
+    }
+
+
+    @Override
+    public List<EquipmentDTO> getAllEquipment() {
+        List<EquipmentEntity> getAllEquipment = equipmentDao.findAll();
+        return mapping.convertToEquipmentDTOList(getAllEquipment);
+
+    }
+
 
 
 }

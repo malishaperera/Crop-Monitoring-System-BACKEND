@@ -17,7 +17,8 @@ public interface EquipmentDao extends JpaRepository<EquipmentEntity, String> {
     boolean existsByStaff_StaffMemberId(String staffMemberId);
 
 
-//    boolean existsByStaff_StaffMemberIdAndEquipmentIdNot(String staffMemberId, String equipmentId);
 
     Optional<EquipmentEntity> findByStaff_StaffMemberIdAndEquipmentIdNot(String staffMemberId, String equipmentId);
+
+    EquipmentEntity getEquipmentEntityByEquipmentId(String equipmentId);
 }
