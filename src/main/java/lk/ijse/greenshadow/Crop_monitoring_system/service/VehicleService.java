@@ -4,4 +4,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.VehicleDTO;
 
 public interface VehicleService {
     void saveVehicle(VehicleDTO vehicleDTO);
+
+
+    void updateVehicle(String vehicleCode, VehicleDTO vehicleDTO);
 }
