@@ -1,5 +1,7 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffResponse;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.VehicleResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.StaffDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.VehicleDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
@@ -17,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
@@ -83,5 +87,34 @@ public class VehicleController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    //Delete Vehicle
+
+    @DeleteMapping(value = "/{vehicleCode}")
+    public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode){
+        try {
+            vehicleService.deleteVehicle(vehicleCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (StaffNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+    //Get Vehicle
+    @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public VehicleResponse getSelectVehicle(@PathVariable("vehicleCode") String vehicleCode){
+        return vehicleService.getSelectVehicle(vehicleCode);
+    }
+
+    //Get All Vehicle
+    @GetMapping(value = "allVehicles", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<VehicleDTO> getAllVehicle(){
+        return vehicleService.getAllStaffs();
     }
 }

@@ -1,6 +1,9 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.service;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffErrorResponse;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.VehicleErrorResponse;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.VehicleResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.StaffDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.VehicleDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.StaffDTO;
@@ -81,5 +84,27 @@ public class VehicleServiceImpl implements VehicleService {
         }
     }
 
+    @Override
+    public void deleteVehicle(String vehicleCode) {
+        Optional<VehicleEntity> findVehicleId = vehicleDao.findById(vehicleCode);
+        if(!findVehicleId.isPresent()) {
+            throw new StaffNotFoundException("Vehicle not found");
+        }else {
+            vehicleDao.deleteById(vehicleCode);
+        }
+    }
 
+    @Override
+    public VehicleResponse getSelectVehicle(String vehicleCode) {
+        if (vehicleDao.existsById(vehicleCode)) {
+            return mapping.convertToVehicleDTO(vehicleDao.getReferenceById(vehicleCode));
+        }else {
+            return new VehicleErrorResponse(0,"Vehicle not save");
+        }
+    }
+
+    @Override
+    public List<VehicleDTO> getAllStaffs() {
+        return mapping.convertToVehicleDTOList(vehicleDao.findAll());
+    }
 }
