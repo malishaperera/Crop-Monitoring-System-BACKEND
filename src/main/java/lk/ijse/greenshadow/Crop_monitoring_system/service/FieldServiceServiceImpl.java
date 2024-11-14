@@ -12,10 +12,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,6 +55,8 @@ public class FieldServiceServiceImpl implements FieldService{
             tmpField.get().setFieldImage1(updateField.getFieldImage1());
             tmpField.get().setFieldImage2(updateField.getFieldImage2());
             tmpField.get().setFieldCode(updateField.getFieldCode());
+
+//            fieldDao.save(fieldEntity);
         }
     }
 
@@ -89,4 +88,18 @@ public class FieldServiceServiceImpl implements FieldService{
         List<FieldEntity> getAllFields = fieldDao.findAll();
         return mapping.convertToFieldDTOList(getAllFields);
     }
+
+
+
+    //Custom
+//    @Override
+//    public FieldEntity existByField(String fieldCode) {
+//        FieldEntity byFieldCode = fieldDao.findByFieldCode(fieldCode);
+//        if (byFieldCode == null) {
+//            throw new FieldNotFoundException("Field not found");
+//        }
+////        return mapping.convertToFieldDTO(byFieldCode);
+//        return byFieldCode;
+//
+//    }
 }

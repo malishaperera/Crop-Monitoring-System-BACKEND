@@ -4,4 +4,9 @@ import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.EquipmentDTO;
 
 public interface EquipmentService {
     void saveEquipment(EquipmentDTO equipmentDTO);
+
+    void deleteEquipment(String equipmentId);
+
+
+    void updateEquipment(String equipmentId, EquipmentDTO equipmentDTO);
 }

@@ -17,4 +17,5 @@ public class CropLogDetailsPK implements Serializable {
     private String cropCode;
     @Column(name = "log_code")
     private String logCode;
+
 }

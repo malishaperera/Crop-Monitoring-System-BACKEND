@@ -51,7 +51,7 @@ public class FieldController {
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
             byte[] imageByteCollection2 = fieldImage2.getBytes();
-            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection1);
+            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection2);
 
             FieldDTO buildFieldDTO = new FieldDTO();
             buildFieldDTO.setFieldName(fieldName);
@@ -92,7 +92,7 @@ public class FieldController {
             byte[] imageByteCollection1 = fieldImage1.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
-            byte[] imageByteCollection2 = fieldImage1.getBytes();
+            byte[] imageByteCollection2 = fieldImage2.getBytes();
             String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
             FieldDTO updateField = new FieldDTO();

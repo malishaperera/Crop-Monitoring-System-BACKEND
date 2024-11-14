@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EquipmentDao extends JpaRepository<EquipmentEntity, String> {
@@ -16,4 +17,7 @@ public interface EquipmentDao extends JpaRepository<EquipmentEntity, String> {
     boolean existsByStaff_StaffMemberId(String staffMemberId);
 
 
+//    boolean existsByStaff_StaffMemberIdAndEquipmentIdNot(String staffMemberId, String equipmentId);
+
+    Optional<EquipmentEntity> findByStaff_StaffMemberIdAndEquipmentIdNot(String staffMemberId, String equipmentId);
 }

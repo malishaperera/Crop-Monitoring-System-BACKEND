@@ -2,6 +2,7 @@ package lk.ijse.greenshadow.Crop_monitoring_system.service;
 
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
 
 import java.util.List;
 
@@ -15,4 +16,8 @@ public interface FieldService {
     FieldResponse getSelectField(String fieldCode);
 
     List<FieldDTO> getAllFields();
+
+
+    //Custom
+//    FieldEntity existByField(String fieldCode);
 }

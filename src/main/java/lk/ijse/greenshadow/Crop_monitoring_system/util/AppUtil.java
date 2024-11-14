@@ -28,7 +28,7 @@ public class AppUtil {
             int lastIdNumber = Integer.parseInt(lastEquipmentId.substring(4));
             return String.format("EQI-%03d", lastIdNumber + 1);
         }
-        return "EQI--001";
+        return "EQI-001";
     }
 
     public static String toBase64ProfilePic(byte[] profilePic) {
