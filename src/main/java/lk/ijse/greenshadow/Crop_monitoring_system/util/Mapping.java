@@ -1,13 +1,7 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.util;
 
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.EquipmentDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.StaffDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.CropEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.EquipmentEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
+import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.*;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -95,4 +89,26 @@ public class Mapping {
                 .map(this::convertToStaffDTO)
                 .toList();
     }
+
+
+
+
+    /*------------------------------------------------Vehicle---------------------------------------------------*/
+// VehicleEntity to VehicleDTO
+    public VehicleDTO convertToVehicleDTO(VehicleEntity vehicle) {
+        return modelMapper.map(vehicle, VehicleDTO.class);
+    }
+
+    // VehicleDTO to VehicleEntity
+    public VehicleEntity convertToVehicleEntity(VehicleDTO dto) {
+        return modelMapper.map(dto, VehicleEntity.class);
+    }
+
+    // List<VehicleEntity> to List<VehicleDTO>
+    public List<VehicleDTO> convertToVehicleDTOList(List<VehicleEntity> vehicleList) {
+        return vehicleList.stream()
+                .map(this::convertToVehicleDTO)
+                .toList();
+    }
+
 }

@@ -45,4 +45,12 @@ public class AppUtil {
         return "STAFF-001";
     }
 
+    // Vehicle ID Generate
+    public static String generateVehicleId(String lastVehicleId) {
+        if (lastVehicleId != null && lastVehicleId.startsWith("VEHICLE-")) {
+            int lastIdNumber = Integer.parseInt(lastVehicleId.substring(8));
+            return String.format("VEHICLE-%03d", lastIdNumber + 1);
+        }
+        return "VEHICLE-001";
+    }
 }

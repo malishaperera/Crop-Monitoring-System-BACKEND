@@ -96,4 +96,11 @@ public class StaffServiceImpl implements StaffService{
     public List<StaffDTO> getAllStaffs() {
         return mapping.convertToStaffDTOList(staffDao.findAll());
     }
+
+    //custom
+    @Override
+    public StaffDTO existByStaffMember(String staffMemberId) {
+        StaffEntity byStaffMemberId = staffDao.findByStaffMemberId(staffMemberId);
+        return mapping.convertToStaffDTO(byStaffMemberId);
+    }
 }

@@ -140,14 +140,9 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
     }
 
-
     @Override
     public List<EquipmentDTO> getAllEquipment() {
         List<EquipmentEntity> getAllEquipment = equipmentDao.findAll();
         return mapping.convertToEquipmentDTOList(getAllEquipment);
-
     }
-
-
-
 }
