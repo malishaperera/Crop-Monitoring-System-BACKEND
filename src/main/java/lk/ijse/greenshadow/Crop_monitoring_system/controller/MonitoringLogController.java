@@ -54,6 +54,7 @@ public class MonitoringLogController {
             e.printStackTrace();
             return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
 
