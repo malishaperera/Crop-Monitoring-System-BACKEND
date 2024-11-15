@@ -94,7 +94,7 @@ public class Mapping {
 
 
     /*------------------------------------------------Vehicle---------------------------------------------------*/
-// VehicleEntity to VehicleDTO
+    // VehicleEntity to VehicleDTO
     public VehicleDTO convertToVehicleDTO(VehicleEntity vehicle) {
         return modelMapper.map(vehicle, VehicleDTO.class);
     }
@@ -111,4 +111,23 @@ public class Mapping {
                 .toList();
     }
 
+
+
+    /*------------------------------------------------MonitoringLog---------------------------------------------------*/
+    // MonitoringLogEntity to MonitoringLogDTO
+    public MonitoringLogDTO convertToMonitoringLogDTO(MonitoringLogEntity log) {
+        return modelMapper.map(log, MonitoringLogDTO.class);
+    }
+
+    // MonitoringLogDTO to MonitoringLogEntity
+    public MonitoringLogEntity convertToMonitoringLogEntity(MonitoringLogDTO dto) {
+        return modelMapper.map(dto, MonitoringLogEntity.class);
+    }
+
+    // List<MonitoringLogEntity> to List<MonitoringLogDTO>
+    public List<MonitoringLogDTO> convertToMonitoringLogDTOList(List<MonitoringLogEntity> logList) {
+        return logList.stream()
+                .map(this::convertToMonitoringLogDTO)
+                .toList();
+    }
 }

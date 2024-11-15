@@ -53,4 +53,13 @@ public class AppUtil {
         }
         return "VEHICLE-001";
     }
+
+    // MonitoringLog ID Generate
+    public static String generateMonitoringLogId(String lastMonitoringLogId) {
+        if (lastMonitoringLogId != null && lastMonitoringLogId.startsWith("MONI-LOG-")) {
+            int lastIdNumber = Integer.parseInt(lastMonitoringLogId.substring(9));
+            return String.format("MONI-LOG-%03d", lastIdNumber + 1);
+        }
+        return "MONI-LOG-001";
+    }
 }
