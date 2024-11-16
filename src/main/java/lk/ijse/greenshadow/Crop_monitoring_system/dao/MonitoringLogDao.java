@@ -13,4 +13,6 @@ public interface MonitoringLogDao extends JpaRepository<MonitoringLogEntity, Str
 
     @Query("SELECT i.logCode FROM MonitoringLogEntity i ORDER BY i.logCode DESC")
     List<String> findLastMonitoringLogCode();
+
+    MonitoringLogEntity getMonitoringLogEntityByLogCode(String logCode);
 }

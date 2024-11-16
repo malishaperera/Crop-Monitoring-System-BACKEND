@@ -1,6 +1,9 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.service;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldErrorResponse;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.MonitoringLogErrorResponse;
+import lk.ijse.greenshadow.Crop_monitoring_system.customObj.MonitoringLogResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.MonitoringLogDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.MonitoringLogDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.CropEntity;
@@ -26,6 +29,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Autowired
     private final Mapping mapping;
+
+
 
     @Override
     public void saveMonitoringLog(MonitoringLogDTO monitoringLogDTO) {
@@ -57,6 +62,32 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         monitoringLogDao.save(monitoringLogEntity);
     }
 
+    @Override
+    public void deleteMonitoringLog(String logCode) {
+        Optional<MonitoringLogEntity> selectedMonitoringLogCode = monitoringLogDao.findById(logCode);
+        if (!selectedMonitoringLogCode.isPresent()) {
+            throw new CropNotFoundException("Monitoring with code " + logCode + " not found");
+        }else {
+            monitoringLogDao.deleteById(logCode);
+        }
+
+    }
+
+    @Override
+    public MonitoringLogResponse getSelectMonitoringLog(String logCode) {
+        if (monitoringLogDao.existsById(logCode)) {
+            MonitoringLogEntity monitoringLogEntityByLogCode = monitoringLogDao.getMonitoringLogEntityByLogCode(logCode);
+            return mapping.convertToMonitoringLogDTO(monitoringLogEntityByLogCode);
+        }else {
+            return new MonitoringLogErrorResponse(0,"MonitoringLog not found");
+        }
+    }
+
+    @Override
+    public List<MonitoringLogDTO> getAllMonitoringLogs() {
+        List<MonitoringLogEntity> getAllMonitoringLogs = monitoringLogDao.findAll();
+        return mapping.convertToMonitoringLogDTOList(getAllMonitoringLogs);
+    }
 
 
 }
