@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class Mapping {
@@ -17,7 +18,26 @@ public class Mapping {
 
     //EquipmentEntity covert EquipmentDTO
     public FieldDTO convertToFieldDTO(FieldEntity field) {
-        return modelMapper.map(field, FieldDTO.class);
+        if (field == null) {
+            throw new IllegalArgumentException("FieldEntity is null");
+        }
+
+        FieldDTO fieldDTO = modelMapper.map(field, FieldDTO.class);
+
+        // Log the crops before mapping
+        if (field.getCropList() == null) {
+            System.out.println("No crops found for this field.");
+        } else {
+            System.out.println("Number of crops found: " + field.getCropList().size());
+        }
+
+        // Explicitly map cropList to cropDTOList
+        List<CropDTO> cropDTOList = field.getCropList().stream()
+                .map(cropEntity -> modelMapper.map(cropEntity, CropDTO.class))
+                .collect(Collectors.toList());
+        fieldDTO.setCropDTOList(cropDTOList);
+
+        return fieldDTO;
     }
 
     //EquipmentDTO covert EquipmentEntity

@@ -8,13 +8,20 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.SuperDTO;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.EquipmentEntity;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.UserEntity;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.VehicleEntity;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldStaffDetailsEntity;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.StaffLogDetailsEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.Gender;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +43,13 @@ public class StaffDTO implements SuperDTO, StaffResponse {
     private String contactNo;
     private String email;
     private Role role;
+
+    //Another
+    private EquipmentEntity equipment;
+    private List<VehicleDTO> vehicleDTOList = new ArrayList<>();
+//    private UserEntity user;
+
+    //Associate
+    private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
+    private List<StaffLogDetailsEntity> staffLogDetailsList = new ArrayList<>();
 }

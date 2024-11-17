@@ -1,5 +1,6 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.CropLogDetailsEntity;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,9 @@ public class CropEntity {
     @Column(name = "crop_season")
     private String cropSeason;
 
-    @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne()
     @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private FieldEntity field;
 

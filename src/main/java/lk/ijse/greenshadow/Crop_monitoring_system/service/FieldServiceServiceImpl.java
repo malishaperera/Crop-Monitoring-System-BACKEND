@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldErrorResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
+import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
@@ -14,8 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
 @Transactional
@@ -71,16 +75,6 @@ public class FieldServiceServiceImpl implements FieldService{
         }
     }
 
-    //Field Get
-    @Override
-    public FieldResponse getSelectField(String fieldCode) {
-        if (fieldDao.existsById(fieldCode)) {
-            FieldEntity fieldEntityByFieldCode = fieldDao.getFieldEntityByFieldCode(fieldCode);
-            return mapping.convertToFieldDTO(fieldEntityByFieldCode);
-        }else {
-            return new FieldErrorResponse(0,"Field not found");
-        }
-    }
 
     //Field GetAll
     @Override
@@ -89,17 +83,64 @@ public class FieldServiceServiceImpl implements FieldService{
         return mapping.convertToFieldDTOList(getAllFields);
     }
 
-
-
-    //Custom
+//Field Get
 //    @Override
-//    public FieldEntity existByField(String fieldCode) {
-//        FieldEntity byFieldCode = fieldDao.findByFieldCode(fieldCode);
-//        if (byFieldCode == null) {
-//            throw new FieldNotFoundException("Field not found");
+//    public FieldResponse getSelectField(String fieldCode) {
+//        if (fieldDao.existsById(fieldCode)) {
+//            FieldEntity fieldEntityByFieldCode = fieldDao.getFieldEntityByFieldCode(fieldCode);
+//            return mapping.convertToFieldDTO(fieldEntityByFieldCode);
+//        }else {
+//            return new FieldErrorResponse(0,"Field not found");
 //        }
-////        return mapping.convertToFieldDTO(byFieldCode);
-//        return byFieldCode;
-//
 //    }
+
+    @Override
+    public FieldResponse getSelectField(String fieldCode) {
+        try {
+            if (fieldDao.existsById(fieldCode)) {
+                FieldEntity fieldEntityByFieldCode = fieldDao.getFieldEntityByFieldCode(fieldCode);
+                return mapping.convertToFieldDTO(fieldEntityByFieldCode);
+            } else {
+                return new FieldErrorResponse(0, "Field not found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the error
+            return new FieldErrorResponse(0, "An error occurred while processing the request.");
+        }
+    }
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

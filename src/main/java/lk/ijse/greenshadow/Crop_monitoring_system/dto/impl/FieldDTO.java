@@ -1,5 +1,6 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.dto.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.SuperDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.EquipmentEntity;
@@ -25,7 +26,9 @@ public class FieldDTO implements SuperDTO, FieldResponse {
     private String fieldImage1;
     private String fieldImage2;
 
+
     private List<CropDTO> cropDTOList = new ArrayList<>();
+
     private List<EquipmentDTO> equipmentDTOList = new ArrayList<>();
 
     //Associate

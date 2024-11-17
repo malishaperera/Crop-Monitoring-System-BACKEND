@@ -120,8 +120,6 @@ public class CropController {
         }
     }
 
-
-
     //Delete Crop
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCrop(@PathVariable("id") String cropCode) {
