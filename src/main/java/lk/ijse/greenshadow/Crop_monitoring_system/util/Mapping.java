@@ -17,6 +17,29 @@ public class Mapping {
     /*------------------------------------------------Field---------------------------------------------------*/
 
     //EquipmentEntity covert EquipmentDTO
+//    public FieldDTO convertToFieldDTO(FieldEntity field) {
+//        if (field == null) {
+//            throw new IllegalArgumentException("FieldEntity is null");
+//        }
+//
+//        FieldDTO fieldDTO = modelMapper.map(field, FieldDTO.class);
+//
+//        // Log the crops before mapping
+//        if (field.getCropList() == null) {
+//            System.out.println("No crops found for this field.");
+//        } else {
+//            System.out.println("Number of crops found: " + field.getCropList().size());
+//        }
+//
+//        // Explicitly map cropList to cropDTOList
+//        List<CropDTO> cropDTOList = field.getCropList().stream()
+//                .map(cropEntity -> modelMapper.map(cropEntity, CropDTO.class))
+//                .collect(Collectors.toList());
+//        fieldDTO.setCropDTOList(cropDTOList);
+//
+//        return fieldDTO;
+//    }
+
     public FieldDTO convertToFieldDTO(FieldEntity field) {
         if (field == null) {
             throw new IllegalArgumentException("FieldEntity is null");
@@ -31,10 +54,16 @@ public class Mapping {
             System.out.println("Number of crops found: " + field.getCropList().size());
         }
 
-        // Explicitly map cropList to cropDTOList
+        // Explicitly map cropList to cropDTOList, avoiding recursion issues
         List<CropDTO> cropDTOList = field.getCropList().stream()
-                .map(cropEntity -> modelMapper.map(cropEntity, CropDTO.class))
+                .map(cropEntity -> {
+                    // Only map the crop without the back-reference to the field
+                    CropDTO cropDTO = modelMapper.map(cropEntity, CropDTO.class);
+                    cropDTO.setField(null);  // Null out the field reference to avoid recursion
+                    return cropDTO;
+                })
                 .collect(Collectors.toList());
+
         fieldDTO.setCropDTOList(cropDTOList);
 
         return fieldDTO;

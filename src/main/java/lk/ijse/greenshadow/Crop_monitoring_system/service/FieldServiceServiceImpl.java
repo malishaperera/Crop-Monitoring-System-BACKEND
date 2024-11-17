@@ -83,17 +83,6 @@ public class FieldServiceServiceImpl implements FieldService{
         return mapping.convertToFieldDTOList(getAllFields);
     }
 
-//Field Get
-//    @Override
-//    public FieldResponse getSelectField(String fieldCode) {
-//        if (fieldDao.existsById(fieldCode)) {
-//            FieldEntity fieldEntityByFieldCode = fieldDao.getFieldEntityByFieldCode(fieldCode);
-//            return mapping.convertToFieldDTO(fieldEntityByFieldCode);
-//        }else {
-//            return new FieldErrorResponse(0,"Field not found");
-//        }
-//    }
-
     @Override
     public FieldResponse getSelectField(String fieldCode) {
         try {
@@ -108,10 +97,6 @@ public class FieldServiceServiceImpl implements FieldService{
             return new FieldErrorResponse(0, "An error occurred while processing the request.");
         }
     }
-
-
-
-
 }
 
 

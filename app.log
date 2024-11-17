@@ -8547,3 +8547,71 @@ java.lang.StackOverflowError: null
 2024-11-17 13:16:01 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-11-17 13:16:01 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2024-11-17 13:16:01 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-11-17 13:17:47 [main] INFO  l.i.g.C.CropMonitoringSystemApplication - Starting CropMonitoringSystemApplication using Java 17.0.13 with PID 20800 (C:\Users\User\Desktop\GDSE\AAD-1\Final-Project\Crop-monitoring-system\build\classes\java\main started by User in C:\Users\User\Desktop\GDSE\AAD-1\Final-Project\Crop-monitoring-system)
+2024-11-17 13:17:47 [main] INFO  l.i.g.C.CropMonitoringSystemApplication - The following 1 profile is active: "dev"
+2024-11-17 13:17:47 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-17 13:17:47 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 82 ms. Found 7 JPA repository interfaces.
+2024-11-17 13:17:48 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 5055 (http)
+2024-11-17 13:17:48 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-5055"]
+2024-11-17 13:17:48 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-11-17 13:17:48 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-17 13:17:48 [main] INFO  o.a.c.c.C.[.[.[/cropmonitoringcollector] - Initializing Spring embedded WebApplicationContext
+2024-11-17 13:17:48 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1435 ms
+2024-11-17 13:17:48 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-17 13:17:48 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-17 13:17:48 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-11-17 13:17:49 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-17 13:17:49 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-11-17 13:17:49 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@75a9cc24
+2024-11-17 13:17:49 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-11-17 13:17:49 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-17 13:17:49 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-11-17 13:17:50 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-17 13:17:50 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-17 13:17:51 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-17 13:17:51 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-17 13:17:52 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-5055"]
+2024-11-17 13:17:52 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 5055 (http) with context path '/cropmonitoringcollector'
+2024-11-17 13:17:52 [main] INFO  l.i.g.C.CropMonitoringSystemApplication - Started CropMonitoringSystemApplication in 5.496 seconds (process running for 6.119)
+2024-11-17 13:17:55 [http-nio-5055-exec-2] INFO  o.a.c.c.C.[.[.[/cropmonitoringcollector] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-17 13:17:55 [http-nio-5055-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-11-17 13:17:55 [http-nio-5055-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-11-17 13:17:55 [http-nio-5055-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2024-11-17 13:17:55 [http-nio-5055-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2024-11-17 13:18:05 [http-nio-5055-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2024-11-17 13:18:05 [http-nio-5055-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2024-11-17 13:20:28 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-17 13:20:28 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-11-17 13:20:28 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-11-17 13:20:33 [main] INFO  l.i.g.C.CropMonitoringSystemApplication - Starting CropMonitoringSystemApplication using Java 17.0.13 with PID 10160 (C:\Users\User\Desktop\GDSE\AAD-1\Final-Project\Crop-monitoring-system\build\classes\java\main started by User in C:\Users\User\Desktop\GDSE\AAD-1\Final-Project\Crop-monitoring-system)
+2024-11-17 13:20:33 [main] INFO  l.i.g.C.CropMonitoringSystemApplication - The following 1 profile is active: "dev"
+2024-11-17 13:20:34 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-17 13:20:34 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 92 ms. Found 7 JPA repository interfaces.
+2024-11-17 13:20:34 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 5055 (http)
+2024-11-17 13:20:34 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-5055"]
+2024-11-17 13:20:34 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-11-17 13:20:34 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-17 13:20:34 [main] INFO  o.a.c.c.C.[.[.[/cropmonitoringcollector] - Initializing Spring embedded WebApplicationContext
+2024-11-17 13:20:34 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1341 ms
+2024-11-17 13:20:35 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-17 13:20:35 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-17 13:20:35 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-11-17 13:20:35 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-17 13:20:35 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-11-17 13:20:35 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@58ebee9
+2024-11-17 13:20:35 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-11-17 13:20:35 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-17 13:20:35 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-11-17 13:20:36 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-17 13:20:37 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-17 13:20:37 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-17 13:20:37 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-17 13:20:38 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-5055"]
+2024-11-17 13:20:38 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 5055 (http) with context path '/cropmonitoringcollector'
+2024-11-17 13:20:38 [main] INFO  l.i.g.C.CropMonitoringSystemApplication - Started CropMonitoringSystemApplication in 5.167 seconds (process running for 5.853)
+2024-11-17 13:20:44 [http-nio-5055-exec-6] INFO  o.a.c.c.C.[.[.[/cropmonitoringcollector] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-17 13:20:44 [http-nio-5055-exec-6] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-11-17 13:20:44 [http-nio-5055-exec-6] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-11-17 13:21:48 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-17 13:21:48 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-11-17 13:21:48 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
