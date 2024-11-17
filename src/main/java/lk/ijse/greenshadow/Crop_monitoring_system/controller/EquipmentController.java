@@ -1,15 +1,11 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.dao.EquipmentDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.StaffDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.EquipmentDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.EquipmentTypes;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.Status;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.EquipmentNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.EquipmentService;
@@ -20,8 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 

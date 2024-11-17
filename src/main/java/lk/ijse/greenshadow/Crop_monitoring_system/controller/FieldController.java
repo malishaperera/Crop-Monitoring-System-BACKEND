@@ -7,6 +7,8 @@ import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundExcepti
 import lk.ijse.greenshadow.Crop_monitoring_system.service.FieldService;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,11 +24,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FieldController {
 
+    private static final Logger logger = LoggerFactory.getLogger(FieldController.class);
+
     @Autowired
     private final FieldService fieldService;
 
     @GetMapping("/health")
     public String healthCheck(){
+        logger.info("Health check endpoint called");
         return "Field is running";
     }
 
@@ -39,7 +44,8 @@ public class FieldController {
             @RequestParam("fieldLocation") String  fieldLocation,
             @RequestParam("fieldSize") double fieldSize,
             @RequestParam("fieldImage1") MultipartFile fieldImage1,
-            @RequestParam("fieldImage2") MultipartFile fieldImage2){
+            @RequestParam("fieldImage2") MultipartFile fieldImage2)
+    {
 
         try {
             String[] coords = fieldLocation.split(",");
@@ -93,7 +99,7 @@ public class FieldController {
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
             byte[] imageByteCollection2 = fieldImage2.getBytes();
-            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection1);
+            String base64ProfilePic2 = AppUtil.toBase64ProfilePic(imageByteCollection2);
 
             FieldDTO updateField = new FieldDTO();
             updateField.setFieldCode(fieldCode);

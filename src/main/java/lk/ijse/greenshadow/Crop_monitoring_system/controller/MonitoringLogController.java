@@ -1,18 +1,13 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
 
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldErrorResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
+
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.MonitoringLogResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.MonitoringLogDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.MonitoringLogService;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

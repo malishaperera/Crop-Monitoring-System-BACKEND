@@ -1,20 +1,14 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.CropErrorResponse;
+
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.CropResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldErrorResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.CropDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.CropEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.CropNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
-import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.CropService;
-import lk.ijse.greenshadow.Crop_monitoring_system.service.EquipmentService;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
-import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 @RestController
 @RequestMapping("/api/v1/crops")

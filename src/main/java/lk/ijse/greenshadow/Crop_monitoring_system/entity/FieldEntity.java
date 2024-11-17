@@ -33,16 +33,16 @@ public class FieldEntity {
 
 
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private java.util.List<CropEntity> cropList = new ArrayList<>();
+    private List<CropEntity> cropList = new ArrayList<>();
 
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private java.util.List<EquipmentEntity> equipmentList = new ArrayList<>();
+    private List<EquipmentEntity> equipmentList = new ArrayList<>();
 
     //Associate
 
     // Associate with FieldStaffDetailsEntity
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private java.util.List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
+    private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
 
 
     // Associate with FieldLogDetailsEntity

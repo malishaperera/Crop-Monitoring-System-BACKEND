@@ -1,17 +1,13 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffResponse;
+
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.VehicleResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.StaffDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.VehicleDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.VehicleEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.StaffNotFoundException;
-import lk.ijse.greenshadow.Crop_monitoring_system.exception.VehicleNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.StaffService;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.VehicleService;
-import lk.ijse.greenshadow.Crop_monitoring_system.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 @RestController
 @RequestMapping("/api/v1/vehicles")
