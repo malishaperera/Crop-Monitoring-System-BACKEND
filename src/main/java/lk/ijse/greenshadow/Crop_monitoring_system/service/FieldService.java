@@ -16,8 +16,4 @@ public interface FieldService {
     FieldResponse getSelectField(String fieldCode);
 
     List<FieldDTO> getAllFields();
-
-
-    //Custom
-//    FieldEntity existByField(String fieldCode);
 }
