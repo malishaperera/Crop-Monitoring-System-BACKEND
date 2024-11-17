@@ -26,61 +26,86 @@ public class CropServiceImpl implements CropService {
 
     private final CropDao cropDao;
 
+
+
     @Autowired
     private final Mapping mapping;
 
     private final FieldDao fieldDao;
 
     @Override
-    public void saveCrop(CropDTO cropDTO) {
+    public void saveCrop(CropDTO cropDTO,String fieldCode) {
         List<String> cropCode = cropDao.findLastCropCode();
         String lastCropCode = cropCode.isEmpty() ? null : cropCode.get(0);
         cropDTO.setCropCode(AppUtil.generateNextCropId(lastCropCode));
 
+        if (cropDao.existsById(cropDTO.getCropCode())) {
+            throw new DataPersistFailedException("Crop not save");
+        }
+
+        cropDTO.setField(mapping.convertToFieldDTO(fieldDao.getFieldEntityByFieldCode(fieldCode)));
+        CropEntity cropEntity = cropDao.save(mapping.convertToCropEntity(cropDTO));
+        if (cropEntity.getCropCode() == null) {
+            throw new DataPersistFailedException("Crop not save");
+        }
+
+
+
+
+
         // Fetch the FieldEntity using fieldCode
-        FieldEntity field = fieldDao.findByFieldCode(cropDTO.getField().getFieldCode());
-        if (field == null) {
-            throw new DataPersistFailedException("Field not found");
-        }
+//        FieldEntity field = fieldDao.findByFieldCode(cropDTO.getField().getFieldCode());
+//        if (field == null) {
+//            throw new DataPersistFailedException("Field not found");
+//        }
+//
+//        cropDTO.setField(field);  // Set the FieldEntity into CropDTO
+//
+//        CropEntity isSaveCrop = cropDao.save(mapping.convertToCropEntity(cropDTO));
+//
+//        if (isSaveCrop == null) {
+//            throw new DataPersistFailedException("Cannot save data");
+//        }
+//        System.out.println("Saving CropEntity:"+isSaveCrop.getCropCode()+isSaveCrop.getCropCommonName());
 
-        cropDTO.setField(field);  // Set the FieldEntity into CropDTO
 
-        CropEntity isSaveCrop = cropDao.save(mapping.convertToCropEntity(cropDTO));
-
-        if (isSaveCrop == null) {
-            throw new DataPersistFailedException("Cannot save data");
-        }
-        System.out.println("Saving CropEntity:"+isSaveCrop.getCropCode()+isSaveCrop.getCropCommonName());
 
     }
 
     @Override
-    public void updateCrop(CropDTO updateCrop) {
-        Optional<CropEntity> tmpCrop = cropDao.findById(updateCrop.getCropCode());
-        if (!tmpCrop.isPresent()) {
+    public void updateCrop(CropDTO updateCrop, String fieldCode) {
+        // Check if the CropEntity exists
+        Optional<CropEntity> existingCropOptional = cropDao.findById(updateCrop.getCropCode());
+        if (existingCropOptional.isEmpty()) {
             throw new CropNotFoundException("Crop with code " + updateCrop.getCropCode() + " not found");
         }
 
-        // Fetch the FieldEntity using fieldCode
-        FieldEntity field = fieldDao.findByFieldCode(updateCrop.getField().getFieldCode());
-        if (field == null) {
-            throw new DataPersistFailedException("Field with code " + updateCrop.getField().getFieldCode() + " not found");
+        CropEntity existingCrop = existingCropOptional.get();
+
+        // Validate and fetch FieldEntity using fieldCode
+        FieldEntity fieldEntity = fieldDao.getFieldEntityByFieldCode(fieldCode);
+        if (fieldEntity == null) {
+            throw new DataPersistFailedException("Field with code " + fieldCode + " not found");
         }
 
-        System.out.println("Field found: " + field.getFieldCode());
+        // Update the CropEntity with new data
+        existingCrop.setCropCommonName(updateCrop.getCropCommonName());
+        existingCrop.setCropScientificName(updateCrop.getCropScientificName());
+        existingCrop.setCropImage(updateCrop.getCropImage());
+        existingCrop.setCategory(updateCrop.getCategory());
+        existingCrop.setCropSeason(updateCrop.getCropSeason());
+        existingCrop.setField(fieldEntity);
 
-        // Update the CropEntity with new values
-        CropEntity cropEntity = tmpCrop.get();
-        cropEntity.setCropCommonName(updateCrop.getCropCommonName());
-        cropEntity.setCropScientificName(updateCrop.getCropScientificName());
-        cropEntity.setCropImage(updateCrop.getCropImage());
-        cropEntity.setCategory(updateCrop.getCategory());
-        cropEntity.setCropSeason(updateCrop.getCropSeason());
-        cropEntity.setField(field);
-        // Save the updated CropEntity
-        cropDao.save(cropEntity);
+        // Save the updated CropEntity to the database
+        CropEntity updatedCropEntity = cropDao.save(existingCrop);
 
-        System.out.println("Updated CropEntity: " + cropEntity.getCropCode() + " " + cropEntity.getCropCommonName());
+        // Ensure the update was successful
+        if (updatedCropEntity == null || updatedCropEntity.getCropCode() == null) {
+            throw new DataPersistFailedException("Failed to update crop with code " + updateCrop.getCropCode());
+        }
+
+        System.out.println("Updated CropEntity: " + updatedCropEntity.getCropCode() + " " + updatedCropEntity.getCropCommonName());
+
     }
 
     @Override

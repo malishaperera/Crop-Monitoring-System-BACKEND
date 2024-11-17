@@ -22,7 +22,7 @@ public class CropDTO implements SuperDTO, CropResponse {
     private String cropImage;
     private String category;
     private String cropSeason;
-    private FieldEntity field;
+    private FieldDTO field;
 
     //Associate
     private List<CropLogDetailsEntity> cropLogDetailsList = new ArrayList<>();

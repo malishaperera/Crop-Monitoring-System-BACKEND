@@ -26,6 +26,7 @@ public class FieldDTO implements SuperDTO, FieldResponse {
 
     private List<CropDTO> cropDTOList = new ArrayList<>();
     private List<EquipmentDTO> equipmentDTOList = new ArrayList<>();
+
     //Associate
     private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
     private List<FieldLogDetailsEntity> fieldLogDetailsList = new ArrayList<>();

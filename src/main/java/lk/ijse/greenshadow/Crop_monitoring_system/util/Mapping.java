@@ -16,30 +16,6 @@ public class Mapping {
 
     /*------------------------------------------------Field---------------------------------------------------*/
 
-    //EquipmentEntity covert EquipmentDTO
-//    public FieldDTO convertToFieldDTO(FieldEntity field) {
-//        if (field == null) {
-//            throw new IllegalArgumentException("FieldEntity is null");
-//        }
-//
-//        FieldDTO fieldDTO = modelMapper.map(field, FieldDTO.class);
-//
-//        // Log the crops before mapping
-//        if (field.getCropList() == null) {
-//            System.out.println("No crops found for this field.");
-//        } else {
-//            System.out.println("Number of crops found: " + field.getCropList().size());
-//        }
-//
-//        // Explicitly map cropList to cropDTOList
-//        List<CropDTO> cropDTOList = field.getCropList().stream()
-//                .map(cropEntity -> modelMapper.map(cropEntity, CropDTO.class))
-//                .collect(Collectors.toList());
-//        fieldDTO.setCropDTOList(cropDTOList);
-//
-//        return fieldDTO;
-//    }
-
     public FieldDTO convertToFieldDTO(FieldEntity field) {
         if (field == null) {
             throw new IllegalArgumentException("FieldEntity is null");
@@ -74,6 +50,7 @@ public class Mapping {
         return modelMapper.map(dto, FieldEntity.class);
     }
 
+
     //EquipmentEntity list convert EquipmentDTO
     public List<FieldDTO> convertToFieldDTOList(List<FieldEntity> fields) {
 //        return modelMapper.map(fields, List.class);
@@ -81,7 +58,6 @@ public class Mapping {
                 .map(this::convertToFieldDTO)
                 .toList();
     }
-
 
     /*------------------------------------------------Crop---------------------------------------------------*/
     // CropEntity to CropDTO
@@ -101,8 +77,7 @@ public class Mapping {
                 .toList();
     }
 
-
-    /*------------------------------------------------Equipment---------------------------------------------------*/
+    /*-----------------------------------------------Equipment---------------------------------------------------*/
     // EquipmentEntity to EquipmentDTO
     public EquipmentDTO convertToEquipmentDTO(EquipmentEntity equipment) {
         return modelMapper.map(equipment, EquipmentDTO.class);
@@ -120,9 +95,8 @@ public class Mapping {
                 .toList();
     }
 
-
     /*------------------------------------------------Staff---------------------------------------------------*/
-// StaffEntity to StaffDTO
+    // StaffEntity to StaffDTO
     public StaffDTO convertToStaffDTO(StaffEntity staff) {
         return modelMapper.map(staff, StaffDTO.class);
     }
@@ -138,9 +112,6 @@ public class Mapping {
                 .map(this::convertToStaffDTO)
                 .toList();
     }
-
-
-
 
     /*------------------------------------------------Vehicle---------------------------------------------------*/
     // VehicleEntity to VehicleDTO
@@ -159,8 +130,6 @@ public class Mapping {
                 .map(this::convertToVehicleDTO)
                 .toList();
     }
-
-
 
     /*------------------------------------------------MonitoringLog---------------------------------------------------*/
     // MonitoringLogEntity to MonitoringLogDTO

@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -30,6 +29,8 @@ public class FieldServiceServiceImpl implements FieldService{
     private static final Logger logger = LoggerFactory.getLogger(FieldServiceServiceImpl.class);
 
     private final FieldDao fieldDao;
+
+
 
     @Autowired
     private final Mapping mapping;
@@ -43,6 +44,7 @@ public class FieldServiceServiceImpl implements FieldService{
         fieldDTO.setFieldCode(AppUtil.generateNextFieldId(lastFieldCode));
 
         FieldEntity isSaveField = fieldDao.save(mapping.convertToFieldEntity(fieldDTO));
+//        fieldDao.save(mapping.convertToFi)
         if (isSaveField == null) {
             logger.error("Failed to save field: {}", fieldDTO.getFieldName());
             throw new DataPersistFailedException("Cannot save field data");
@@ -87,16 +89,7 @@ public class FieldServiceServiceImpl implements FieldService{
         }
     }
 
-
-    //Field GetAll
-    @Override
-    public List<FieldDTO> getAllFields() {
-        logger.info("Fetching all fields");
-        List<FieldEntity> allFields = fieldDao.findAll();
-        logger.info("Retrieved {} fields", allFields.size());
-        return mapping.convertToFieldDTOList(allFields);
-    }
-
+    //Field Get
     @Override
     public FieldResponse getSelectField(String fieldCode) {
         logger.info("Fetching field details for code: {}", fieldCode);
@@ -108,5 +101,14 @@ public class FieldServiceServiceImpl implements FieldService{
         FieldEntity fieldEntity = fieldDao.getFieldEntityByFieldCode(fieldCode);
         logger.info("Field retrieved successfully for code: {}", fieldCode);
         return mapping.convertToFieldDTO(fieldEntity);
+    }
+
+    //Field GetAll
+    @Override
+    public List<FieldDTO> getAllFields() {
+        logger.info("Fetching all fields");
+        List<FieldEntity> allFields = fieldDao.findAll();
+        logger.info("Retrieved {} fields", allFields.size());
+        return mapping.convertToFieldDTOList(allFields);
     }
 }

@@ -2,10 +2,8 @@ package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
 
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.CropResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.dao.CropDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.CropNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.CropService;
@@ -29,9 +27,6 @@ public class CropController {
 
     private final FieldDao fieldDao;
 
-    @Autowired
-    private CropDao cropDao;
-
 
     @GetMapping("/health")
     public String healthCheck(){
@@ -39,8 +34,8 @@ public class CropController {
     }
 
     /**To Do CRUD Operation**/
-    //Save Crop
 
+    //Save Crop
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> saveCrop(
             @RequestParam("cropCommonName") String cropCommonName,
@@ -55,10 +50,12 @@ public class CropController {
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
             // Fetch the FieldEntity using the fieldCode
-            FieldEntity field = fieldDao.findByFieldCode(fieldCode);
-            if (field == null) {
-                return new ResponseEntity<>("Field not found", HttpStatus.NOT_FOUND);
-            }
+//            FieldEntity byFieldCode = fieldDao.findByFieldCode(fieldCode);
+//            if (field == null) {
+//                return new ResponseEntity<>("Field not found", HttpStatus.NOT_FOUND);
+//            }
+
+
 
             CropDTO buildCropDTO = new CropDTO();
             buildCropDTO.setCropCommonName(cropCommonName);
@@ -66,9 +63,9 @@ public class CropController {
             buildCropDTO.setCropImage(base64ProfilePic1);
             buildCropDTO.setCategory(category);
             buildCropDTO.setCropSeason(cropSeason);
-            buildCropDTO.setField(field);
+//            buildCropDTO.setField(field);
 
-            cropService.saveCrop(buildCropDTO);
+            cropService.saveCrop(buildCropDTO,fieldCode);
 
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistFailedException e){
@@ -94,11 +91,10 @@ public class CropController {
             byte[] imageByteCollection1 = cropImage.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
-            // Fetch the FieldEntity using the fieldCode
-            FieldEntity field = fieldDao.findByFieldCode(fieldCode);
-            if (field == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+//            FieldEntity field = fieldDao.findByFieldCode(fieldCode);
+//            if (field == null) {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
 
             CropDTO updateCrop = new CropDTO();
             updateCrop.setCropCode(cropCode);
@@ -107,9 +103,9 @@ public class CropController {
             updateCrop.setCropImage(base64ProfilePic1);
             updateCrop.setCategory(category);
             updateCrop.setCropSeason(cropSeason);
-            updateCrop.setField(field);
+//            updateCrop.setField(field);
 
-            cropService.updateCrop(updateCrop);
+            cropService.updateCrop(updateCrop,fieldCode);
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (DataPersistFailedException e) {

@@ -21,4 +21,5 @@ public class EquipmentDTO implements SuperDTO, EquipmentResponse {
     private Status status;
     private FieldEntity field;
     private StaffEntity staff;
+
 }
