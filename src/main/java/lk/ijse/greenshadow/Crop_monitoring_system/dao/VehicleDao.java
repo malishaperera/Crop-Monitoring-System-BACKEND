@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface VehicleDao extends JpaRepository<VehicleEntity, String> {
 
-    @Query("SELECT i.vehicleCode FROM VehicleEntity i ORDER BY i.vehicleCode DESC")
-    List<String> findLastVehicleId();
+//    @Query("SELECT i.vehicleCode FROM VehicleEntity i ORDER BY i.vehicleCode DESC")
+//    List<String> findLastVehicleId();
 }

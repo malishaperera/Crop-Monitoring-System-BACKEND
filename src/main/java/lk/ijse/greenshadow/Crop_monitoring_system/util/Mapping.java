@@ -21,29 +21,25 @@ public class Mapping {
             throw new IllegalArgumentException("FieldEntity is null");
         }
 
+        // Map basic field properties
         FieldDTO fieldDTO = modelMapper.map(field, FieldDTO.class);
 
-        // Log the crops before mapping
-        if (field.getCropList() == null) {
+        // Handle crops associated with the field
+        if (field.getCropList() == null || field.getCropList().isEmpty()) {
             System.out.println("No crops found for this field.");
         } else {
             System.out.println("Number of crops found: " + field.getCropList().size());
+
+            // Map crop codes from crop list
+            List<String> cropCodes = field.getCropList().stream()
+                    .map(CropEntity::getCropCode) // Extract crop codes
+                    .collect(Collectors.toList());
+            fieldDTO.setCropCodes(cropCodes);
         }
-
-        // Explicitly map cropList to cropDTOList, avoiding recursion issues
-        List<CropDTO> cropDTOList = field.getCropList().stream()
-                .map(cropEntity -> {
-                    // Only map the crop without the back-reference to the field
-                    CropDTO cropDTO = modelMapper.map(cropEntity, CropDTO.class);
-                    cropDTO.setField(null);  // Null out the field reference to avoid recursion
-                    return cropDTO;
-                })
-                .collect(Collectors.toList());
-
-        fieldDTO.setCropDTOList(cropDTOList);
 
         return fieldDTO;
     }
+
 
     //EquipmentDTO covert EquipmentEntity
     public FieldEntity convertToFieldEntity(FieldDTO dto) {
@@ -58,6 +54,7 @@ public class Mapping {
                 .map(this::convertToFieldDTO)
                 .toList();
     }
+
 
     /*------------------------------------------------Crop---------------------------------------------------*/
     // CropEntity to CropDTO
@@ -76,76 +73,76 @@ public class Mapping {
                 .map(this::convertToCropDTO)
                 .toList();
     }
-
-    /*-----------------------------------------------Equipment---------------------------------------------------*/
-    // EquipmentEntity to EquipmentDTO
-    public EquipmentDTO convertToEquipmentDTO(EquipmentEntity equipment) {
-        return modelMapper.map(equipment, EquipmentDTO.class);
-    }
-
-    // EquipmentDTO to EquipmentEntity
-    public EquipmentEntity convertToEquipmentEntity(EquipmentDTO dto) {
-        return modelMapper.map(dto, EquipmentEntity.class);
-    }
-
-    // List<EquipmentEntity> to List<EquipmentDTO>
-    public List<EquipmentDTO> convertToEquipmentDTOList(List<EquipmentEntity> equipmentList) {
-        return equipmentList.stream()
-                .map(this::convertToEquipmentDTO)
-                .toList();
-    }
-
-    /*------------------------------------------------Staff---------------------------------------------------*/
-    // StaffEntity to StaffDTO
-    public StaffDTO convertToStaffDTO(StaffEntity staff) {
-        return modelMapper.map(staff, StaffDTO.class);
-    }
-
-    // StaffDTO to StaffEntity
-    public StaffEntity convertToStaffEntity(StaffDTO dto) {
-        return modelMapper.map(dto, StaffEntity.class);
-    }
-
-    // List<StaffEntity> to List<StaffDTO>
-    public List<StaffDTO> convertToStaffDTOList(List<StaffEntity> staffList) {
-        return staffList.stream()
-                .map(this::convertToStaffDTO)
-                .toList();
-    }
-
-    /*------------------------------------------------Vehicle---------------------------------------------------*/
-    // VehicleEntity to VehicleDTO
-    public VehicleDTO convertToVehicleDTO(VehicleEntity vehicle) {
-        return modelMapper.map(vehicle, VehicleDTO.class);
-    }
-
-    // VehicleDTO to VehicleEntity
-    public VehicleEntity convertToVehicleEntity(VehicleDTO dto) {
-        return modelMapper.map(dto, VehicleEntity.class);
-    }
-
-    // List<VehicleEntity> to List<VehicleDTO>
-    public List<VehicleDTO> convertToVehicleDTOList(List<VehicleEntity> vehicleList) {
-        return vehicleList.stream()
-                .map(this::convertToVehicleDTO)
-                .toList();
-    }
-
-    /*------------------------------------------------MonitoringLog---------------------------------------------------*/
-    // MonitoringLogEntity to MonitoringLogDTO
-    public MonitoringLogDTO convertToMonitoringLogDTO(MonitoringLogEntity log) {
-        return modelMapper.map(log, MonitoringLogDTO.class);
-    }
-
-    // MonitoringLogDTO to MonitoringLogEntity
-    public MonitoringLogEntity convertToMonitoringLogEntity(MonitoringLogDTO dto) {
-        return modelMapper.map(dto, MonitoringLogEntity.class);
-    }
-
-    // List<MonitoringLogEntity> to List<MonitoringLogDTO>
-    public List<MonitoringLogDTO> convertToMonitoringLogDTOList(List<MonitoringLogEntity> logList) {
-        return logList.stream()
-                .map(this::convertToMonitoringLogDTO)
-                .toList();
-    }
+//
+//    /*-----------------------------------------------Equipment---------------------------------------------------*/
+//    // EquipmentEntity to EquipmentDTO
+//    public EquipmentDTO convertToEquipmentDTO(EquipmentEntity equipment) {
+//        return modelMapper.map(equipment, EquipmentDTO.class);
+//    }
+//
+//    // EquipmentDTO to EquipmentEntity
+//    public EquipmentEntity convertToEquipmentEntity(EquipmentDTO dto) {
+//        return modelMapper.map(dto, EquipmentEntity.class);
+//    }
+//
+//    // List<EquipmentEntity> to List<EquipmentDTO>
+//    public List<EquipmentDTO> convertToEquipmentDTOList(List<EquipmentEntity> equipmentList) {
+//        return equipmentList.stream()
+//                .map(this::convertToEquipmentDTO)
+//                .toList();
+//    }
+//
+//    /*------------------------------------------------Staff---------------------------------------------------*/
+//    // StaffEntity to StaffDTO
+//    public StaffDTO convertToStaffDTO(StaffEntity staff) {
+//        return modelMapper.map(staff, StaffDTO.class);
+//    }
+//
+//    // StaffDTO to StaffEntity
+//    public StaffEntity convertToStaffEntity(StaffDTO dto) {
+//        return modelMapper.map(dto, StaffEntity.class);
+//    }
+//
+//    // List<StaffEntity> to List<StaffDTO>
+//    public List<StaffDTO> convertToStaffDTOList(List<StaffEntity> staffList) {
+//        return staffList.stream()
+//                .map(this::convertToStaffDTO)
+//                .toList();
+//    }
+//
+//    /*------------------------------------------------Vehicle---------------------------------------------------*/
+//    // VehicleEntity to VehicleDTO
+//    public VehicleDTO convertToVehicleDTO(VehicleEntity vehicle) {
+//        return modelMapper.map(vehicle, VehicleDTO.class);
+//    }
+//
+//    // VehicleDTO to VehicleEntity
+//    public VehicleEntity convertToVehicleEntity(VehicleDTO dto) {
+//        return modelMapper.map(dto, VehicleEntity.class);
+//    }
+//
+//    // List<VehicleEntity> to List<VehicleDTO>
+//    public List<VehicleDTO> convertToVehicleDTOList(List<VehicleEntity> vehicleList) {
+//        return vehicleList.stream()
+//                .map(this::convertToVehicleDTO)
+//                .toList();
+//    }
+//
+//    /*------------------------------------------------MonitoringLog---------------------------------------------------*/
+//    // MonitoringLogEntity to MonitoringLogDTO
+//    public MonitoringLogDTO convertToMonitoringLogDTO(MonitoringLogEntity log) {
+//        return modelMapper.map(log, MonitoringLogDTO.class);
+//    }
+//
+//    // MonitoringLogDTO to MonitoringLogEntity
+//    public MonitoringLogEntity convertToMonitoringLogEntity(MonitoringLogDTO dto) {
+//        return modelMapper.map(dto, MonitoringLogEntity.class);
+//    }
+//
+//    // List<MonitoringLogEntity> to List<MonitoringLogDTO>
+//    public List<MonitoringLogDTO> convertToMonitoringLogDTOList(List<MonitoringLogEntity> logList) {
+//        return logList.stream()
+//                .map(this::convertToMonitoringLogDTO)
+//                .toList();
+//    }
 }

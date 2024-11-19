@@ -3,9 +3,6 @@ package lk.ijse.greenshadow.Crop_monitoring_system.dto.impl;
 
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.MonitoringLogResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.SuperDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.CropLogDetailsEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldLogDetailsEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.StaffLogDetailsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +21,8 @@ public class MonitoringLogDTO implements SuperDTO, MonitoringLogResponse {
     private String observedImage;
 
     //Associate
-    private List<StaffLogDetailsEntity> staffLogDetailsList = new ArrayList<>();
-    private List<FieldLogDetailsEntity> fieldLogDetailsList = new ArrayList<>();
-    private List<CropLogDetailsEntity> cropLogDetailsList = new ArrayList<>();
+    private List<String> fieldCodes = new ArrayList<>();
+    private List<String> cropCodes = new ArrayList<>();
+    private List<String> staffMemberIds = new ArrayList<>();
 
 }

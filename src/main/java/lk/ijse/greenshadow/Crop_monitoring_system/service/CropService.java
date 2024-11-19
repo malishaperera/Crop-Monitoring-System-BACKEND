@@ -6,9 +6,9 @@ import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
 import java.util.List;
 
 public interface CropService {
-    void saveCrop(CropDTO buildCropDTO,String fieldCode);
+    void saveCrop(CropDTO buildCropDTO);
 
-    void updateCrop(CropDTO updateCrop,String fieldCode);
+    void updateCrop(CropDTO updateCrop,String cropCode);
 
     void deleteCrop(String cropCode);
 

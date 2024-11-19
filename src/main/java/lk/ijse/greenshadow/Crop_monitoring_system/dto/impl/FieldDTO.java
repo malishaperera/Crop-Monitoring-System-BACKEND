@@ -2,8 +2,6 @@ package lk.ijse.greenshadow.Crop_monitoring_system.dto.impl;
 
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.SuperDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldLogDetailsEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldStaffDetailsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +22,10 @@ public class FieldDTO implements SuperDTO, FieldResponse {
     private String fieldImage1;
     private String fieldImage2;
 
-    private List<CropDTO> cropDTOList = new ArrayList<>();
-    private List<EquipmentDTO> equipmentDTOList = new ArrayList<>();
+    private List<String> cropCodes = new ArrayList<>();
+    private List<String> equipmentIds = new ArrayList<>();
 
     //Associate
-    private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
-    private List<FieldLogDetailsEntity> fieldLogDetailsList = new ArrayList<>();
+    private List<String> staffMemberIds = new ArrayList<>();
+    private List<String> logCodes = new ArrayList<>();
 }

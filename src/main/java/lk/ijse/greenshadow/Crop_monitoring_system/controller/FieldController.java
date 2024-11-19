@@ -66,7 +66,6 @@ public class FieldController {
             buildFieldDTO.setFieldSize(fieldSize);
             buildFieldDTO.setFieldImage1(base64ProfilePic1);
             buildFieldDTO.setFieldImage2(base64ProfilePic2);
-
             fieldService.saveField(buildFieldDTO);
             logger.info("Field saved successfully: {}", fieldName);
             return new ResponseEntity<>(HttpStatus.CREATED);

@@ -2,17 +2,8 @@ package lk.ijse.greenshadow.Crop_monitoring_system.dto.impl;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.SuperDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.EquipmentEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.UserEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.VehicleEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldStaffDetailsEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.StaffLogDetailsEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.Gender;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.Role;
 import lombok.AllArgsConstructor;
@@ -45,11 +36,14 @@ public class StaffDTO implements SuperDTO, StaffResponse {
     private Role role;
 
     //Another
-    private EquipmentEntity equipment;
-    private List<VehicleDTO> vehicleDTOList = new ArrayList<>();
-//    private UserEntity user;
+    private String equipmentId;
+    private List<String> vehicleCodes = new ArrayList<>();
+
 
     //Associate
-    private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
-    private List<StaffLogDetailsEntity> staffLogDetailsList = new ArrayList<>();
+//    private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
+//    private List<StaffLogDetailsEntity> staffLogDetailsList = new ArrayList<>();
+    private List<String> fieldCode =  new ArrayList<>();
+    private List<String> logCodes = new ArrayList<>();
+
 }

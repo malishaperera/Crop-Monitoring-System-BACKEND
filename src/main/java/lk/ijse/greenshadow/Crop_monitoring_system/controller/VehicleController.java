@@ -41,75 +41,75 @@ public class VehicleController {
     }
 
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> saveVehicle(@RequestBody VehicleDTO vehicleDTO) {
-
-        if (vehicleDTO == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vehicle cannot be null");
-        }
-        try {
-            // Fetch StaffEntity based on staffMemberId
-            StaffDTO staffDTO = staffService.existByStaffMember(vehicleDTO.getStaffMemberId());
-            if (staffDTO == null) {
-                return new ResponseEntity<>("Staff not found", HttpStatus.NOT_FOUND);
-            }
-
-            vehicleDTO.setStaffMemberId(staffDTO.getStaffMemberId());
-
-            // Save vehicle
-            vehicleService.saveVehicle(vehicleDTO);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (DataPersistFailedException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-    @PatchMapping(value = "/{vehicleCode}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateStaff(@PathVariable("vehicleCode") String vehicleCode , @RequestBody VehicleDTO vehicleDTO){
-        try {
-            if (vehicleDTO == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vehicle cannot be null");
-            }
-            vehicleService.updateVehicle(vehicleCode,vehicleDTO);
-
-            return new ResponseEntity<>(HttpStatus.CREATED);
-
-        }catch (StaffNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-    //Delete Vehicle
-
-    @DeleteMapping(value = "/{vehicleCode}")
-    public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode){
-        try {
-            vehicleService.deleteVehicle(vehicleCode);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (StaffNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-
-    //Get Vehicle
-    @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public VehicleResponse getSelectVehicle(@PathVariable("vehicleCode") String vehicleCode){
-        return vehicleService.getSelectVehicle(vehicleCode);
-    }
-
-    //Get All Vehicle
-    @GetMapping(value = "allVehicles", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<VehicleDTO> getAllVehicle(){
-        return vehicleService.getAllStaffs();
-    }
+//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<String> saveVehicle(@RequestBody VehicleDTO vehicleDTO) {
+//
+//        if (vehicleDTO == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vehicle cannot be null");
+//        }
+//        try {
+//            // Fetch StaffEntity based on staffMemberId
+//            StaffDTO staffDTO = staffService.existByStaffMember(vehicleDTO.getStaffMemberId());
+//            if (staffDTO == null) {
+//                return new ResponseEntity<>("Staff not found", HttpStatus.NOT_FOUND);
+//            }
+//
+//            vehicleDTO.setStaffMemberId(staffDTO.getStaffMemberId());
+//
+//            // Save vehicle
+//            vehicleService.saveVehicle(vehicleDTO);
+//            return new ResponseEntity<>(HttpStatus.CREATED);
+//        } catch (DataPersistFailedException e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//
+//
+//    @PatchMapping(value = "/{vehicleCode}",produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Void> updateStaff(@PathVariable("vehicleCode") String vehicleCode , @RequestBody VehicleDTO vehicleDTO){
+//        try {
+//            if (vehicleDTO == null) {
+//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vehicle cannot be null");
+//            }
+//            vehicleService.updateVehicle(vehicleCode,vehicleDTO);
+//
+//            return new ResponseEntity<>(HttpStatus.CREATED);
+//
+//        }catch (StaffNotFoundException e){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }catch (Exception e){
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//
+//
+//    //Delete Vehicle
+//
+//    @DeleteMapping(value = "/{vehicleCode}")
+//    public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode){
+//        try {
+//            vehicleService.deleteVehicle(vehicleCode);
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }catch (StaffNotFoundException e){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }catch (Exception e){
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//
+//
+//
+//    //Get Vehicle
+//    @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public VehicleResponse getSelectVehicle(@PathVariable("vehicleCode") String vehicleCode){
+//        return vehicleService.getSelectVehicle(vehicleCode);
+//    }
+//
+//    //Get All Vehicle
+//    @GetMapping(value = "allVehicles", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<VehicleDTO> getAllVehicle(){
+//        return vehicleService.getAllStaffs();
+//    }
 }

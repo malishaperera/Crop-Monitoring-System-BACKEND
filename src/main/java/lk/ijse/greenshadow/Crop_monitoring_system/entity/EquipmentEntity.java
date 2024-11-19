@@ -25,11 +25,11 @@ public class EquipmentEntity {
     @Column(name = "availability_status")
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private FieldEntity field;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "staff_member_id", referencedColumnName = "staff_member_id")
     private StaffEntity staff;
 }

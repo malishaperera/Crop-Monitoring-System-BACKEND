@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -29,8 +28,6 @@ public class FieldServiceServiceImpl implements FieldService{
     private static final Logger logger = LoggerFactory.getLogger(FieldServiceServiceImpl.class);
 
     private final FieldDao fieldDao;
-
-
 
     @Autowired
     private final Mapping mapping;
@@ -44,7 +41,6 @@ public class FieldServiceServiceImpl implements FieldService{
         fieldDTO.setFieldCode(AppUtil.generateNextFieldId(lastFieldCode));
 
         FieldEntity isSaveField = fieldDao.save(mapping.convertToFieldEntity(fieldDTO));
-//        fieldDao.save(mapping.convertToFi)
         if (isSaveField == null) {
             logger.error("Failed to save field: {}", fieldDTO.getFieldName());
             throw new DataPersistFailedException("Cannot save field data");

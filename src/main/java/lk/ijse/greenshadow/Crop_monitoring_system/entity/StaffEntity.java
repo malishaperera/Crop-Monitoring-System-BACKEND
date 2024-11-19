@@ -71,22 +71,22 @@ public class StaffEntity {
     private Role role;
 
 
-    @OneToOne(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private EquipmentEntity equipment;
 
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY) // Cascade if needed
     @JsonIgnore
     private List<VehicleEntity> vehicleList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserEntity user;
 
     //Associate
 
-    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<StaffLogDetailsEntity> staffLogDetailsList = new ArrayList<>();
 
 }
