@@ -32,61 +32,61 @@ public class StaffController {
     /**To Do CRUD Operation**/
 
     //Save Staff
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<String> saveStaff(@RequestBody StaffDTO staffDTO){
-//        if (staffDTO == null) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Staff cannot be null");
-//        }else {
-//            try {
-//                staffService.saveStaff(staffDTO);
-//                return new ResponseEntity<>(HttpStatus.CREATED);
-//            }catch (DataPersistFailedException e){
-//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//            }catch (Exception e){
-//                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//        }
-//    }
-//
-//    //Update Staff
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PatchMapping(value = "/{staffMemberId}",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Void> updateStaff(@PathVariable("staffMemberId") String staffMemberId , @RequestBody StaffDTO staff){
-//        try {
-//            if (staff == null && (staffMemberId == null || staff.equals(""))){
-//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//            }
-//            staffService.updateStaff(staffMemberId,staff);
-//            return new ResponseEntity<>(HttpStatus.CREATED);
-//        }catch (StaffNotFoundException e){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }catch (Exception e){
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-//    //Delete Staff
-//    @DeleteMapping(value = "/{staffMemberId}")
-//    public ResponseEntity<Void> deleteStaff(@PathVariable("staffMemberId") String staffMemberId){
-//        try {
-//            staffService.deleteStaff(staffMemberId);
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }catch (StaffNotFoundException e){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }catch (Exception e){
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-//    //Get Staff
-//    @GetMapping(value = "/{staffMemberId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public StaffResponse getSelectStaff(@PathVariable("staffMemberId") String staffMemberId){
-//        return staffService.getSelectStaff(staffMemberId);
-//    }
-//
-//    //Get All Staff
-//    @GetMapping(value = "allStaffs", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<StaffDTO> getAllStaffs(){
-//        return staffService.getAllStaffs();
-//    }
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> saveStaff(@RequestBody StaffDTO staffDTO){
+        if (staffDTO == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Staff cannot be null");
+        }else {
+            try {
+                staffService.saveStaff(staffDTO);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }catch (DataPersistFailedException e){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }catch (Exception e){
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
+    //Update Staff
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping(value = "/{staffMemberId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateStaff(@PathVariable("staffMemberId") String staffMemberId , @RequestBody StaffDTO staff){
+        try {
+            if (staff == null && (staffMemberId == null || staff.equals(""))){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            staffService.updateStaff(staffMemberId,staff);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (StaffNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //Delete Staff
+    @DeleteMapping(value = "/{staffMemberId}")
+    public ResponseEntity<Void> deleteStaff(@PathVariable("staffMemberId") String staffMemberId){
+        try {
+            staffService.deleteStaff(staffMemberId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (StaffNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //Get Staff
+    @GetMapping(value = "/{staffMemberId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public StaffResponse getSelectStaff(@PathVariable("staffMemberId") String staffMemberId){
+        return staffService.getSelectStaff(staffMemberId);
+    }
+
+    //Get All Staff
+    @GetMapping(value = "allStaffs", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<StaffDTO> getAllStaffs(){
+        return staffService.getAllStaffs();
+    }
 }

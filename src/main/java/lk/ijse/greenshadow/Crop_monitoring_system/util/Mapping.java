@@ -93,56 +93,56 @@ public class Mapping {
 //    }
 //
 //    /*------------------------------------------------Staff---------------------------------------------------*/
-//    // StaffEntity to StaffDTO
-//    public StaffDTO convertToStaffDTO(StaffEntity staff) {
-//        return modelMapper.map(staff, StaffDTO.class);
-//    }
-//
-//    // StaffDTO to StaffEntity
-//    public StaffEntity convertToStaffEntity(StaffDTO dto) {
-//        return modelMapper.map(dto, StaffEntity.class);
-//    }
-//
-//    // List<StaffEntity> to List<StaffDTO>
-//    public List<StaffDTO> convertToStaffDTOList(List<StaffEntity> staffList) {
-//        return staffList.stream()
-//                .map(this::convertToStaffDTO)
-//                .toList();
-//    }
+    // StaffEntity to StaffDTO
+    public StaffDTO convertToStaffDTO(StaffEntity staff) {
+        return modelMapper.map(staff, StaffDTO.class);
+    }
+
+    // StaffDTO to StaffEntity
+    public StaffEntity convertToStaffEntity(StaffDTO dto) {
+        return modelMapper.map(dto, StaffEntity.class);
+    }
+
+    // List<StaffEntity> to List<StaffDTO>
+    public List<StaffDTO> convertToStaffDTOList(List<StaffEntity> staffList) {
+        return staffList.stream()
+                .map(this::convertToStaffDTO)
+                .toList();
+    }
 //
 //    /*------------------------------------------------Vehicle---------------------------------------------------*/
-//    // VehicleEntity to VehicleDTO
-//    public VehicleDTO convertToVehicleDTO(VehicleEntity vehicle) {
-//        return modelMapper.map(vehicle, VehicleDTO.class);
-//    }
-//
-//    // VehicleDTO to VehicleEntity
-//    public VehicleEntity convertToVehicleEntity(VehicleDTO dto) {
-//        return modelMapper.map(dto, VehicleEntity.class);
-//    }
-//
-//    // List<VehicleEntity> to List<VehicleDTO>
-//    public List<VehicleDTO> convertToVehicleDTOList(List<VehicleEntity> vehicleList) {
-//        return vehicleList.stream()
-//                .map(this::convertToVehicleDTO)
-//                .toList();
-//    }
-//
+    // VehicleEntity to VehicleDTO
+    public VehicleDTO convertToVehicleDTO(VehicleEntity vehicle) {
+        return modelMapper.map(vehicle, VehicleDTO.class);
+    }
+
+    // VehicleDTO to VehicleEntity
+    public VehicleEntity convertToVehicleEntity(VehicleDTO dto) {
+        return modelMapper.map(dto, VehicleEntity.class);
+    }
+
+    // List<VehicleEntity> to List<VehicleDTO>
+    public List<VehicleDTO> convertToVehicleDTOList(List<VehicleEntity> vehicleList) {
+        return vehicleList.stream()
+                .map(this::convertToVehicleDTO)
+                .toList();
+    }
+
 //    /*------------------------------------------------MonitoringLog---------------------------------------------------*/
-//    // MonitoringLogEntity to MonitoringLogDTO
-//    public MonitoringLogDTO convertToMonitoringLogDTO(MonitoringLogEntity log) {
-//        return modelMapper.map(log, MonitoringLogDTO.class);
-//    }
-//
-//    // MonitoringLogDTO to MonitoringLogEntity
-//    public MonitoringLogEntity convertToMonitoringLogEntity(MonitoringLogDTO dto) {
-//        return modelMapper.map(dto, MonitoringLogEntity.class);
-//    }
-//
-//    // List<MonitoringLogEntity> to List<MonitoringLogDTO>
-//    public List<MonitoringLogDTO> convertToMonitoringLogDTOList(List<MonitoringLogEntity> logList) {
-//        return logList.stream()
-//                .map(this::convertToMonitoringLogDTO)
-//                .toList();
-//    }
+    // MonitoringLogEntity to MonitoringLogDTO
+    public MonitoringLogDTO convertToMonitoringLogDTO(MonitoringLogEntity log) {
+        return modelMapper.map(log, MonitoringLogDTO.class);
+    }
+
+    // MonitoringLogDTO to MonitoringLogEntity
+    public MonitoringLogEntity convertToMonitoringLogEntity(MonitoringLogDTO dto) {
+        return modelMapper.map(dto, MonitoringLogEntity.class);
+    }
+
+    // List<MonitoringLogEntity> to List<MonitoringLogDTO>
+    public List<MonitoringLogDTO> convertToMonitoringLogDTOList(List<MonitoringLogEntity> logList) {
+        return logList.stream()
+                .map(this::convertToMonitoringLogDTO)
+                .toList();
+    }
 }
