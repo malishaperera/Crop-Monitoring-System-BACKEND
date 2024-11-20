@@ -1,27 +1,12 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.service;
 
 import jakarta.transaction.Transactional;
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffErrorResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.VehicleErrorResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.customObj.VehicleResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.dao.StaffDao;
-import lk.ijse.greenshadow.Crop_monitoring_system.dao.VehicleDao;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.StaffDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.VehicleDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.VehicleEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
-import lk.ijse.greenshadow.Crop_monitoring_system.exception.StaffNotFoundException;
-import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
+import lk.ijse.greenshadow.Crop_monitoring_system.repository.StaffRepository;
+import lk.ijse.greenshadow.Crop_monitoring_system.repository.VehicleRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -31,9 +16,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Autowired
     private final Mapping mapping;
 
-    private final VehicleDao vehicleDao;
+    private final VehicleRepository vehicleDao;
 
-    private final StaffDao staffDao;
+    private final StaffRepository staffDao;
 
 
 //    @Override

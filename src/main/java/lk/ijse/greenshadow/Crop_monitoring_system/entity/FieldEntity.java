@@ -36,21 +36,20 @@ public class FieldEntity {
 
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "field")
     private List<CropEntity> cropList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "field")
     private List<EquipmentEntity> equipmentList = new ArrayList<>();
 
     //Associate
 
     // Associate with FieldStaffDetailsEntity
-    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "field")
     private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
 
 
     // Associate with FieldLogDetailsEntity
-    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "field")
     private List<FieldLogDetailsEntity> fieldLogDetailsList = new ArrayList<>();
-
 }

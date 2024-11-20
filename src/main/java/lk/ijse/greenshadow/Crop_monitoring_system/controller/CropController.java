@@ -2,16 +2,13 @@ package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
 
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.CropResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.CropNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
-import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.CropService;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class CropController {
-    @Autowired
     private final CropService cropService;
 
     @GetMapping("/health")

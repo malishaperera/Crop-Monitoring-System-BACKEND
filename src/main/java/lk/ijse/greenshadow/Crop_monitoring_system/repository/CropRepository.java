@@ -1,4 +1,4 @@
-package lk.ijse.greenshadow.Crop_monitoring_system.dao;
+package lk.ijse.greenshadow.Crop_monitoring_system.repository;
 
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.CropEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Repository
-public interface CropDao extends JpaRepository<CropEntity, String> {
+public interface CropRepository extends JpaRepository<CropEntity, String> {
 
     @Query("SELECT i.cropCode FROM CropEntity i ORDER BY i.cropCode DESC")
     List<String> findLastCropCode();

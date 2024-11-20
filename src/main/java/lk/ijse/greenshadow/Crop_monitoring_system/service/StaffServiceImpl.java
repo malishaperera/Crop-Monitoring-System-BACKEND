@@ -3,7 +3,7 @@ package lk.ijse.greenshadow.Crop_monitoring_system.service;
 import jakarta.transaction.Transactional;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffErrorResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.dao.StaffDao;
+import lk.ijse.greenshadow.Crop_monitoring_system.repository.StaffRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.StaffDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
@@ -12,10 +12,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +23,7 @@ import java.util.Optional;
 public class StaffServiceImpl implements StaffService{
 
     @Autowired
-    private StaffDao staffDao;
+    private StaffRepository staffDao;
 
     @Autowired
     private Mapping mapping;

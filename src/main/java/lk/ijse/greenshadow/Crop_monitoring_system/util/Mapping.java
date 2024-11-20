@@ -2,6 +2,7 @@ package lk.ijse.greenshadow.Crop_monitoring_system.util;
 
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.*;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.*;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldStaffDetailsEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,29 +17,29 @@ public class Mapping {
 
     /*------------------------------------------------Field---------------------------------------------------*/
 
-    public FieldDTO convertToFieldDTO(FieldEntity field) {
-        if (field == null) {
-            throw new IllegalArgumentException("FieldEntity is null");
-        }
-
-        // Map basic field properties
-        FieldDTO fieldDTO = modelMapper.map(field, FieldDTO.class);
-
-        // Handle crops associated with the field
-        if (field.getCropList() == null || field.getCropList().isEmpty()) {
-            System.out.println("No crops found for this field.");
-        } else {
-            System.out.println("Number of crops found: " + field.getCropList().size());
-
-            // Map crop codes from crop list
-            List<String> cropCodes = field.getCropList().stream()
-                    .map(CropEntity::getCropCode) // Extract crop codes
-                    .collect(Collectors.toList());
-            fieldDTO.setCropCodes(cropCodes);
-        }
-
-        return fieldDTO;
-    }
+//    public FieldDTO convertToFieldDTO(FieldEntity field) {
+//        if (field == null) {
+//            throw new IllegalArgumentException("FieldEntity is null");
+//        }
+//
+//        // Map basic field properties
+//        FieldDTO fieldDTO = modelMapper.map(field, FieldDTO.class);
+//
+//        // Handle crops associated with the field
+//        if (field.getCropList() == null || field.getCropList().isEmpty()) {
+//            System.out.println("No crops found for this field.");
+//        } else {
+//            System.out.println("Number of crops found: " + field.getCropList().size());
+//
+//            // Map crop codes from crop list
+//            List<String> cropCodes = field.getCropList().stream()
+//                    .map(CropEntity::getCropCode)
+//                    .collect(Collectors.toList());
+//            fieldDTO.setCropCodes(cropCodes);
+//        }
+//
+//        return fieldDTO;
+//    }
 
 
     //EquipmentDTO covert EquipmentEntity
@@ -79,18 +80,43 @@ public class Mapping {
 //    public EquipmentDTO convertToEquipmentDTO(EquipmentEntity equipment) {
 //        return modelMapper.map(equipment, EquipmentDTO.class);
 //    }
-//
-//    // EquipmentDTO to EquipmentEntity
-//    public EquipmentEntity convertToEquipmentEntity(EquipmentDTO dto) {
-//        return modelMapper.map(dto, EquipmentEntity.class);
-//    }
-//
-//    // List<EquipmentEntity> to List<EquipmentDTO>
-//    public List<EquipmentDTO> convertToEquipmentDTOList(List<EquipmentEntity> equipmentList) {
-//        return equipmentList.stream()
-//                .map(this::convertToEquipmentDTO)
-//                .toList();
-//    }
+
+    // EquipmentEntity to EquipmentDTO
+    public EquipmentDTO convertToEquipmentDTO(EquipmentEntity equipment) {
+        if (equipment == null) {
+            throw new IllegalArgumentException("EquipmentEntity is null");
+        }
+
+        // Map basic equipment properties
+        EquipmentDTO equipmentDTO = modelMapper.map(equipment, EquipmentDTO.class);
+
+        // Handle associated FieldEntity and StaffEntity
+        if (equipment.getField() != null) {
+            equipmentDTO.setFieldCode(equipment.getField().getFieldCode());
+//            equipmentDTO.setFieldName(equipment.getField().getFieldName());
+        }
+
+        if (equipment.getStaff() != null) {
+            equipmentDTO.setStaffMemberId(equipment.getStaff().getStaffMemberId());
+//            equipmentDTO.setStaffName(equipment.getStaff().getName()); // Assuming staff name exists
+        }
+
+        return equipmentDTO;
+    }
+
+
+
+    // EquipmentDTO to EquipmentEntity
+    public EquipmentEntity convertToEquipmentEntity(EquipmentDTO dto) {
+        return modelMapper.map(dto, EquipmentEntity.class);
+    }
+
+    // List<EquipmentEntity> to List<EquipmentDTO>
+    public List<EquipmentDTO> convertToEquipmentDTOList(List<EquipmentEntity> equipmentList) {
+        return equipmentList.stream()
+                .map(this::convertToEquipmentDTO)
+                .toList();
+    }
 //
 //    /*------------------------------------------------Staff---------------------------------------------------*/
     // StaffEntity to StaffDTO
@@ -145,4 +171,53 @@ public class Mapping {
                 .map(this::convertToMonitoringLogDTO)
                 .toList();
     }
+
+
+
+
+
+
+
+
+
+    public FieldDTO convertToFieldDTO(FieldEntity field) {
+        if (field == null) {
+            throw new IllegalArgumentException("FieldEntity is null");
+        }
+
+        // Map basic field properties
+        FieldDTO fieldDTO = modelMapper.map(field, FieldDTO.class);
+
+        // Handle crops associated with the field
+        if (field.getCropList() != null && !field.getCropList().isEmpty()) {
+            List<String> cropCodes = field.getCropList().stream()
+                    .map(CropEntity::getCropCode) // Extract crop codes
+                    .collect(Collectors.toList());
+            fieldDTO.setCropCodes(cropCodes);
+        } else {
+            System.out.println("No crops found for this field.");
+        }
+
+        // Handle equipment associated with the field
+        if (field.getEquipmentList() != null && !field.getEquipmentList().isEmpty()) {
+            List<String> equipmentCodes = field.getEquipmentList().stream()
+                    .map(EquipmentEntity::getEquipmentId) // Extract equipment IDs
+                    .collect(Collectors.toList());
+            fieldDTO.setEquipmentIds(equipmentCodes);
+        }
+
+        // Handle staff associated with the field
+        if (field.getFieldStaffDetailsList() != null && !field.getFieldStaffDetailsList().isEmpty()) {
+            // Assuming `FieldStaffDetailsEntity` contains a `getStaff()` method returning a `StaffEntity`
+            List<String> staffIds = field.getFieldStaffDetailsList().stream()
+                    .map(FieldStaffDetailsEntity::getStaff)        // Get `StaffEntity`
+                    .map(StaffEntity::getStaffMemberId)            // Extract staff member ID
+                    .collect(Collectors.toList());
+            fieldDTO.setStaffMemberIds(staffIds);
+        }
+
+        return fieldDTO;
+    }
+
+
 }

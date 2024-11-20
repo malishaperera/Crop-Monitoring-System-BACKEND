@@ -36,6 +36,6 @@ public class CropEntity {
     @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private FieldEntity field;
 
-    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "crop")
     private List<CropLogDetailsEntity> cropLogDetailsList = new ArrayList<>();
 }

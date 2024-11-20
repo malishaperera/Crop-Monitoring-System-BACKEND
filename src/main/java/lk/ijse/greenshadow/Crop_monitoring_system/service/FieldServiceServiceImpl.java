@@ -3,7 +3,7 @@ package lk.ijse.greenshadow.Crop_monitoring_system.service;
 import jakarta.transaction.Transactional;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldErrorResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.dao.FieldDao;
+import lk.ijse.greenshadow.Crop_monitoring_system.repository.FieldRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
@@ -27,7 +27,7 @@ public class FieldServiceServiceImpl implements FieldService{
 
     private static final Logger logger = LoggerFactory.getLogger(FieldServiceServiceImpl.class);
 
-    private final FieldDao fieldDao;
+    private final FieldRepository fieldDao;
 
     @Autowired
     private final Mapping mapping;
