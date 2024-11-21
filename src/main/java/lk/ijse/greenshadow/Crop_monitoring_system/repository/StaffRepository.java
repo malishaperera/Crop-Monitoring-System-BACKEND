@@ -1,5 +1,6 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.repository;
 
+import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.StaffDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,5 +15,6 @@ public interface StaffRepository extends JpaRepository<StaffEntity, String> {
     List<String> findLastStaffMemberId();
 
     StaffEntity findByStaffMemberId(String staffMemberId);
+
 
 }

@@ -28,14 +28,17 @@ public class MonitoringLogEntity {
 
     //Associate
 
-    @OneToMany(mappedBy = "log")
+    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "log")
     private List<StaffLogDetailsEntity> staffLogDetailsList = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "log")
+    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "log")
     private List<FieldLogDetailsEntity> fieldLogDetailsList = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "log")
+    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "log")
     private List<CropLogDetailsEntity> cropLogDetailsList = new ArrayList<>();
 }

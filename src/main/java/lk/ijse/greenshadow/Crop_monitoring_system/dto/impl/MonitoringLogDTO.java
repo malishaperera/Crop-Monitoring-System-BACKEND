@@ -24,5 +24,4 @@ public class MonitoringLogDTO implements SuperDTO, MonitoringLogResponse {
     private List<String> fieldCodes = new ArrayList<>();
     private List<String> cropCodes = new ArrayList<>();
     private List<String> staffMemberIds = new ArrayList<>();
-
 }

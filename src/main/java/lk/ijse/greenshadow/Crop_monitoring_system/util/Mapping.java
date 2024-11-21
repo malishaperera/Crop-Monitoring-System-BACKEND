@@ -208,16 +208,13 @@ public class Mapping {
 
         // Handle staff associated with the field
         if (field.getFieldStaffDetailsList() != null && !field.getFieldStaffDetailsList().isEmpty()) {
-            // Assuming `FieldStaffDetailsEntity` contains a `getStaff()` method returning a `StaffEntity`
             List<String> staffIds = field.getFieldStaffDetailsList().stream()
-                    .map(FieldStaffDetailsEntity::getStaff)        // Get `StaffEntity`
-                    .map(StaffEntity::getStaffMemberId)            // Extract staff member ID
+                    .map(FieldStaffDetailsEntity::getStaff)
+                    .map(StaffEntity::getStaffMemberId)
                     .collect(Collectors.toList());
             fieldDTO.setStaffMemberIds(staffIds);
         }
 
         return fieldDTO;
     }
-
-
 }

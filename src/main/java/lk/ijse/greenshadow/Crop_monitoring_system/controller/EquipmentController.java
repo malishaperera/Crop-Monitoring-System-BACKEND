@@ -91,8 +91,4 @@ public class EquipmentController {
     public List<EquipmentDTO> getAllEquipments(){
         return equipmentService.getAllEquipment();
     }
-
-
-
-
 }

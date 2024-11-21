@@ -19,23 +19,32 @@ public class CropEntity {
     @Id
     @Column(name = "crop_code")
     private String cropCode;
+
     @Column(name = "crop_common_name")
     private String cropCommonName;
+
     @Column(name = "crop_scientific_name")
     private String cropScientificName;
+
     @Column(name = "crop_image", columnDefinition = "LONGTEXT")
     private String cropImage;
+
     @Column(name = "category")
     private String category;
+
     @Column(name = "crop_season")
     private String cropSeason;
 
-
+    // Many-to-one relationship with FieldEntity, nullable to allow removal
     @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "field_code", referencedColumnName = "field_code")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "field_code", referencedColumnName = "field_code", nullable = true)
     private FieldEntity field;
 
-    @OneToMany(mappedBy = "crop")
+    // Add this new field to store status
+    @Column(name = "field_status")
+    private String fieldStatus;
+
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CropLogDetailsEntity> cropLogDetailsList = new ArrayList<>();
 }
