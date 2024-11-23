@@ -26,8 +26,8 @@ public class VehicleController {
     @Autowired
     private VehicleService vehicleService;
 
-    @Autowired
-    private StaffService staffService;
+//    @Autowired
+//    private StaffService staffService;
 
     @GetMapping("/health")
     public String healthCheck(){

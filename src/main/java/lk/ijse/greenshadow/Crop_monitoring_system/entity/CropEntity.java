@@ -37,13 +37,10 @@ public class CropEntity {
 
     // Many-to-one relationship with FieldEntity, nullable to allow removal
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "field_code", referencedColumnName = "field_code", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private FieldEntity field;
 
-    // Add this new field to store status
-    @Column(name = "field_status")
-    private String fieldStatus;
 
     @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CropLogDetailsEntity> cropLogDetailsList = new ArrayList<>();

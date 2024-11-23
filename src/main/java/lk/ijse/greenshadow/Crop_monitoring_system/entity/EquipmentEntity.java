@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class EquipmentEntity {
     @Id
-    @Column(name = "equipment_id")
+    @Column(name = "equipment_id", nullable = false, updatable = false)
     private String equipmentId;
     @Column(name = "equipment_name")
     private String name;
@@ -26,13 +26,11 @@ public class EquipmentEntity {
     private Status status;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-//    @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "field_code")
     private FieldEntity field;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OneToOne
-    @JoinColumn(name = "staff_member_id", referencedColumnName = "staff_member_id")
+    @OneToOne
+    @JoinColumn(name = "staff_member_id")
     private StaffEntity staff;
 }

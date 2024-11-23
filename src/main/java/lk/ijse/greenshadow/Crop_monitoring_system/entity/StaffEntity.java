@@ -72,8 +72,9 @@ public class StaffEntity {
 
 
 
-    @OneToOne(mappedBy = "staff", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OneToOne(mappedBy = "staff")
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "staff")
     private EquipmentEntity equipment;
 
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

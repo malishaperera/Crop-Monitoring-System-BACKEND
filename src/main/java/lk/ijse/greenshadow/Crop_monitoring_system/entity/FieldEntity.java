@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @Table(name = "fields")
 @Entity
-@EntityListeners(FieldEntityListener.class)
+//@EntityListeners(FieldEntityListener.class)
 public class FieldEntity {
     @Id
     @Column(name = "field_code")
@@ -40,11 +40,13 @@ public class FieldEntity {
     @Column(name = "field_image_2", columnDefinition = "LONGTEXT")
     private String fieldImage2;
 
+
     @JsonManagedReference
-    @OneToMany(mappedBy = "field", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CropEntity> cropList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "field")
     private List<EquipmentEntity> equipmentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

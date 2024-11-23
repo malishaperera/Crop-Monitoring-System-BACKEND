@@ -22,14 +22,14 @@ public class AppUtil {
         return "CROP-001";
     }
 
-    //Equipment ID Generate
-    public static String generateNextEquipmentId(String lastEquipmentId) {
-        if (lastEquipmentId != null && lastEquipmentId.startsWith("EQI-")) {
-            int lastIdNumber = Integer.parseInt(lastEquipmentId.substring(4));
-            return String.format("EQI-%03d", lastIdNumber + 1);
-        }
-        return "EQI-001";
-    }
+//    public static String generateNextEquipmentId(String lastEquipmentId) {
+//        if (lastEquipmentId != null && lastEquipmentId.startsWith("EQI-")) {
+//            int lastIdNumber = Integer.parseInt(lastEquipmentId.substring(4));
+//            return String.format("EQI-%03d", lastIdNumber + 1);
+//        }
+//        return "EQI-001";
+//    }
+
 
     public static String toBase64ProfilePic(byte[] profilePic) {
         // Convert image bytes to Base64 string
@@ -54,6 +54,7 @@ public class AppUtil {
         return "VEHICLE-001";
     }
 
+
     // MonitoringLog ID Generate
     public static String generateMonitoringLogId(String lastMonitoringLogId) {
         if (lastMonitoringLogId != null && lastMonitoringLogId.startsWith("MONI-LOG-")) {
@@ -62,4 +63,15 @@ public class AppUtil {
         }
         return "MONI-LOG-001";
     }
+
+
+
+    public static String generateNextEquipmentId(String lastEquipmentId) {
+        if (lastEquipmentId != null && lastEquipmentId.startsWith("EQI-")) {
+            int lastIdNumber = Integer.parseInt(lastEquipmentId.substring(4));
+            return String.format("EQI-%03d", lastIdNumber + 1);
+        }
+        return "EQI-001";
+    }
+
 }

@@ -3,6 +3,8 @@ package lk.ijse.greenshadow.Crop_monitoring_system.service;
 import jakarta.transaction.Transactional;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentErrorResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentResponse;
+import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundException;
+import lk.ijse.greenshadow.Crop_monitoring_system.exception.StaffNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.repository.EquipmentRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.repository.FieldRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.repository.StaffRepository;
@@ -15,6 +17,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.exception.EquipmentNotFoundExc
 import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.Mapping;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class EquipmentServiceImpl implements EquipmentService {
 
     @Autowired
@@ -37,17 +41,15 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     private final StaffRepository staffDao;
 
-
     @Override
     public void saveEquipment(EquipmentDTO equipmentDTO) {
-
         try {
             List<String> equipmentId = equipmentDao.findLastEquipmentId();
             String lastEquipmentId = equipmentId.isEmpty() ? null : equipmentId.get(0);
             equipmentDTO.setEquipmentId(AppUtil.generateNextEquipmentId(lastEquipmentId));
 
             //this equipment table exist
-            if (equipmentDao.existsByStaff_StaffMemberId(equipmentDTO.getStaffMemberId())){
+            if (equipmentDao.existsByStaff_StaffMemberId(equipmentDTO.getStaffMemberId())) {
                 throw new DataPersistFailedException("Staff member is already assigned to another equipment.");
             }
 
@@ -138,9 +140,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
     }
 
-
-
-
     @Override
     public EquipmentResponse getSelectEquipment(String equipmentId) {
         if (equipmentDao.existsById(equipmentId)) {
@@ -155,6 +154,6 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public List<EquipmentDTO> getAllEquipment() {
         List<EquipmentEntity> getAllEquipment = equipmentDao.findAll();
-        return mapping.convertToEquipmentDTOList(getAllEquipment);
+        return mapping.convertToEquipmentEntityDTOList(getAllEquipment);
     }
 }
