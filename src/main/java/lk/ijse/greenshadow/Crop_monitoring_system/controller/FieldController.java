@@ -7,6 +7,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundExcepti
 import lk.ijse.greenshadow.Crop_monitoring_system.service.FieldService;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/fields")
 @RequiredArgsConstructor
 @CrossOrigin(origins = {"http://127.0.0.1:5502", "http://localhost:5502"}) // Allow specific origins
+@Slf4j
 public class FieldController {
 
     private static final Logger logger = LoggerFactory.getLogger(FieldController.class);
@@ -42,7 +39,6 @@ public class FieldController {
     }
 
     /**To Do CRUD Operation**/
-
     //Save Field
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -72,20 +68,22 @@ public class FieldController {
             buildFieldDTO.setFieldSize(fieldSize);
             buildFieldDTO.setFieldImage1(base64ProfilePic1);
             buildFieldDTO.setFieldImage2(base64ProfilePic2);
+
             fieldService.saveField(buildFieldDTO);
+
             logger.info("Field saved successfully: {}", fieldName);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistFailedException e){
+            logger.error("Error saving field: {}", fieldName, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            logger.error("Unexpected error occurred while saving field: {}", fieldName, e);
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-
     //Update Field
-//    @PutMapping(value = "/{fieldCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PatchMapping(value = "/{fieldCode}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateField(
             @PathVariable("fieldCode") String fieldCode,
@@ -124,7 +122,6 @@ public class FieldController {
             logger.warn("Field not found for update: {}", fieldCode);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
-//            e.printStackTrace();
             logger.error("An error occurred while updating the field: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -150,7 +147,6 @@ public class FieldController {
     //Get Field
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public FieldResponse getSelectedField(@PathVariable("id") String fieldCode){
-        System.out.println("meka"+ fieldCode);
         logger.info("Received request to fetch field details for code: {}", fieldCode);
         return fieldService.getSelectField(fieldCode);
     }

@@ -32,16 +32,17 @@ public class EquipmentController {
     //Save Equipment
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveEquipment(@RequestBody EquipmentDTO equipmentDTO){
+        log.info("Saving equipment: {}", equipmentDTO.getName());
         try {
-            // Call the service to save the equipment
             equipmentService.saveEquipment(equipmentDTO);
+            log.info("Equipment saved successfully: {}", equipmentDTO.getName());
             return new ResponseEntity<>("Equipment saved successfully", HttpStatus.CREATED);
 
         } catch (DataPersistFailedException e) {
-            // Return the specific exception message for debugging
+            log.error("Failed to save equipment: {}", e.getMessage());
             return new ResponseEntity<>("Staff member already exist: " , HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            // Handle any other unexpected exceptions
+            log.error("Internal server error while saving equipment: {}", e.getMessage());
             return new ResponseEntity<>("Internal server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -49,18 +50,17 @@ public class EquipmentController {
     //Update Equipment
     @PatchMapping(value = "/{equipmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateEquipment(@PathVariable("equipmentId") String equipmentId, @RequestBody EquipmentDTO equipmentDTO) {
-
+        log.info("Updating equipment with ID: {}", equipmentId);
         try {
-
-            // Call the service to save the equipment
             equipmentService.updateEquipment(equipmentId,equipmentDTO);
+            log.info("Equipment updated successfully with ID: {}", equipmentId);
             return new ResponseEntity<>("Equipment saved successfully", HttpStatus.CREATED);
 
         } catch (DataPersistFailedException e) {
-            // Return the specific exception message for debugging
+            log.error("Failed to update equipment: {}", e.getMessage());
             return new ResponseEntity<>("Staff member already exist: " , HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            // Handle any other unexpected exceptions
+            log.error("Internal server error while updating equipment: {}", e.getMessage());
             return new ResponseEntity<>("Internal server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -68,12 +68,16 @@ public class EquipmentController {
     //Delete Equipment
     @DeleteMapping(value = "/{equipmentId}")
     public ResponseEntity<Void> deleteEquipment(@PathVariable("equipmentId") String equipmentId){
+        log.info("Deleting equipment with ID: {}", equipmentId);
         try {
             equipmentService.deleteEquipment(equipmentId);
+            log.info("Equipment deleted successfully with ID: {}", equipmentId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (EquipmentNotFoundException e){
+            log.error("Equipment not found for deletion with ID: {}", equipmentId);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            log.error("Internal server error while deleting equipment: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -81,12 +85,14 @@ public class EquipmentController {
     //Get Equipment
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EquipmentResponse getSelectEquipment(@PathVariable("id") String equipmentId){
+        log.info("Fetching equipment with ID: {}", equipmentId);
         return equipmentService.getSelectEquipment(equipmentId);
     }
 
     //Get All Equipment
     @GetMapping(value = "allEquipments", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EquipmentDTO> getAllEquipments(){
+        log.info("Fetching all equipment.");
         return equipmentService.getAllEquipment();
     }
 }

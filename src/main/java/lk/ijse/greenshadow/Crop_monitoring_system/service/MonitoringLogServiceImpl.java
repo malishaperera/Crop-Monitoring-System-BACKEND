@@ -19,6 +19,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.repository.*;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.Mapping;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     private final MonitoringLogRepository monitoringLogDao;
@@ -41,37 +43,27 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     private final StaffRepository staffRepository;
 
     private final Mapping mapping;
-//
-//    @Override
-//    public void saveMonitoringLog(MonitoringLogDTO monitoringLogDTO) {
-//        try {
-//            List<String> monitoringLogCode = monitoringLogDao.findLastMonitoringLogCode();
-//            String lastMonitoringLogCode = monitoringLogCode.isEmpty() ? null : monitoringLogCode.get(0);
-//            monitoringLogDTO.setLogCode(AppUtil.generateMonitoringLogId(lastMonitoringLogCode));
-//
-//            MonitoringLogEntity logEntity = mapping.convertToMonitoringLogEntity(monitoringLogDTO);
-//            monitoringLogDao.save(logEntity);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new RuntimeException("Unexpected error occurred while saving monitoring log", e);
-//        }
-//    }
+
     @Override
     public void saveMonitoringLog(MonitoringLogDTO monitoringLogDTO) {
         try {
+            log.info("Starting to save Monitoring Log with observation: {}", monitoringLogDTO.getLogObservation());
             // Generate a new log code
             List<String> monitoringLogCode = monitoringLogDao.findLastMonitoringLogCode();
             String lastMonitoringLogCode = monitoringLogCode.isEmpty() ? null : monitoringLogCode.get(0);
             monitoringLogDTO.setLogCode(AppUtil.generateMonitoringLogId(lastMonitoringLogCode));
+            log.info("Generated new log code: {}", monitoringLogDTO.getLogCode());
 
             // Convert DTO to entity and save MonitoringLogEntity
             MonitoringLogEntity logEntity = mapping.convertToMonitoringLogEntity(monitoringLogDTO);
             monitoringLogDao.save(logEntity);
+            log.info("Monitoring Log saved successfully with code: {}", logEntity.getLogCode());
+
 
             // Process FieldLogDetailsEntity
             List<FieldEntity> fields = fieldRepository.findByFieldCodeIn(monitoringLogDTO.getFieldCodes());
             if (fields.size() != monitoringLogDTO.getFieldCodes().size()) {
+                log.error("Some field codes are invalid or not found.");
                 throw new RuntimeException("Some field codes are invalid or not found.");
             }
             List<FieldLogDetailsEntity> fieldLogDetailsEntities = fields.stream()
@@ -85,10 +77,12 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
                     })
                     .collect(Collectors.toList());
             fieldLogDetailsRepository.saveAll(fieldLogDetailsEntities);
+            log.info("Field Log Details saved for log code: {}", monitoringLogDTO.getLogCode());
 
             // Process CropLogDetailsEntity
             List<CropEntity> crops = cropRepository.findByCropCodeIn(monitoringLogDTO.getCropCodes());
             if (crops.size() != monitoringLogDTO.getCropCodes().size()) {
+                log.error("Some crop codes are invalid or not found.");
                 throw new RuntimeException("Some crop codes are invalid or not found.");
             }
             List<CropLogDetailsEntity> cropLogDetailsEntities = crops.stream()
@@ -102,10 +96,12 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
                     })
                     .collect(Collectors.toList());
             cropLogDetailsRepository.saveAll(cropLogDetailsEntities);
+            log.info("Crop Log Details saved for log code: {}", monitoringLogDTO.getLogCode());
 
             // Process StaffLogDetailsEntity
             List<StaffEntity> staffMembers = staffRepository.findByStaffMemberIdIn(monitoringLogDTO.getStaffMemberIds());
             if (staffMembers.size() != monitoringLogDTO.getStaffMemberIds().size()) {
+                log.error("Some staff member IDs are invalid or not found.");
                 throw new RuntimeException("Some staff member IDs are invalid or not found.");
             }
             List<StaffLogDetailsEntity> staffLogDetailsEntities = staffMembers.stream()
@@ -119,8 +115,10 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
                     })
                     .collect(Collectors.toList());
             staffLogDetailsRepository.saveAll(staffLogDetailsEntities);
+            log.info("Staff Log Details saved for log code: {}", monitoringLogDTO.getLogCode());
 
         } catch (Exception e) {
+            log.error("Error occurred while saving monitoring log", e);
             e.printStackTrace();
             throw new RuntimeException("Unexpected error occurred while saving monitoring log", e);
         }
@@ -128,8 +126,11 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void updateMonitoringLog(MonitoringLogDTO updateMonitoringLogDTO) {
+        log.info("Updating Monitoring Log with log code: {}", updateMonitoringLogDTO.getLogCode());
+
         Optional<MonitoringLogEntity> tmpMonitoringLog = monitoringLogDao.findById(updateMonitoringLogDTO.getLogCode());
         if (!tmpMonitoringLog.isPresent()) {
+            log.error("Monitoring Log with code {} not found", updateMonitoringLogDTO.getLogCode());
             throw new CropNotFoundException("Monitoring with code " + updateMonitoringLogDTO.getLogCode() + " not found");
         }
 
@@ -138,31 +139,42 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         monitoringLogEntity.setObservedImage(updateMonitoringLogDTO.getObservedImage());
 
         monitoringLogDao.save(monitoringLogEntity);
+        log.info("Monitoring Log with code {} updated successfully", updateMonitoringLogDTO.getLogCode());
     }
 
     @Override
     public void deleteMonitoringLog(String logCode) {
+        log.info("Deleting Monitoring Log with code: {}", logCode);
+
         Optional<MonitoringLogEntity> selectedMonitoringLogCode = monitoringLogDao.findById(logCode);
         if (!selectedMonitoringLogCode.isPresent()) {
+            log.error("Monitoring Log with code {} not found", logCode);
             throw new CropNotFoundException("Monitoring with code " + logCode + " not found");
         }else {
             monitoringLogDao.deleteById(logCode);
+            log.info("Monitoring Log with code {} deleted successfully", logCode);
         }
     }
 
     @Override
     public MonitoringLogResponse getSelectMonitoringLog(String logCode) {
+        log.info("Fetching Monitoring Log with code: {}", logCode);
+
         if (monitoringLogDao.existsById(logCode)) {
             MonitoringLogEntity monitoringLogEntityByLogCode = monitoringLogDao.getMonitoringLogEntityByLogCode(logCode);
+            log.info("Monitoring Log with code {} found", logCode);
             return mapping.convertToMonitoringLogDTO(monitoringLogEntityByLogCode);
         }else {
+            log.error("Monitoring Log with code {} not found", logCode);
             return new MonitoringLogErrorResponse(0,"MonitoringLog not found");
         }
     }
 
     @Override
     public List<MonitoringLogDTO> getAllMonitoringLogs() {
+        log.info("Fetching all Monitoring Logs");
         List<MonitoringLogEntity> getAllMonitoringLogs = monitoringLogDao.findAll();
+        log.info("Retrieved {} Monitoring Logs", getAllMonitoringLogs.size());
         return mapping.convertToMonitoringLogDTOList(getAllMonitoringLogs);
     }
 }

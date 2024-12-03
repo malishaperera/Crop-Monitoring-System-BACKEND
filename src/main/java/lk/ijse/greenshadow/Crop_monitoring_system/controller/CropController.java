@@ -26,6 +26,7 @@ public class CropController {
 
     @GetMapping("/health")
     public String healthCheck(){
+        log.info("Health check for Crop service.");
         return "Crop is running";
     }
 
@@ -42,6 +43,7 @@ public class CropController {
             @RequestParam("fieldCode") String fieldCode){
 
         try {
+            log.info("Saving crop: {} (Common Name: {}, Scientific Name: {})", cropCommonName, cropCommonName, cropScientificName);
             byte[] imageByteCollection1 = cropImage.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
@@ -54,10 +56,13 @@ public class CropController {
             buildCropDTO.setFieldCode(fieldCode);
 
             cropService.saveCrop(buildCropDTO);
+            log.info("Crop saved successfully: {}", cropCommonName);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistFailedException e){
+            log.error("Error saving crop: {}", e.getMessage());
             return new ResponseEntity<>("Crop not saved: Field not found for the provided fieldCode", HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            log.error("Unexpected error while saving crop: {}", e.getMessage(), e);
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -75,6 +80,7 @@ public class CropController {
             @RequestParam("fieldCode") String fieldCode) {
 
         try {
+            log.info("Updating crop: {} (Common Name: {}, Scientific Name: {})", cropCode, cropCommonName, cropScientificName);
             byte[] imageByteCollection1 = cropImage.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
 
@@ -87,10 +93,13 @@ public class CropController {
             updateCrop.setFieldCode(fieldCode);
 
             cropService.updateCrop(updateCrop, cropCode);
+            log.info("Crop updated successfully: {}", cropCode);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (DataPersistFailedException e) {
+            log.error("Error updating crop: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            log.error("Unexpected error while updating crop: {}", e.getMessage(), e);
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -98,11 +107,15 @@ public class CropController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCrop(@PathVariable("id") String cropCode) {
         try {
+            log.info("Deleting crop with code: {}", cropCode);
             cropService.deleteCrop(cropCode);
+            log.info("Crop deleted successfully: {}", cropCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (CropNotFoundException e){
+            log.error("Crop not found for deletion: {}", cropCode);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            log.error("Unexpected error while deleting crop: {}", cropCode, e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -110,12 +123,14 @@ public class CropController {
     //Get Crop
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CropResponse getSelectedCrop(@PathVariable("id") String cropCode){
+        log.info("Fetching crop with code: {}", cropCode);
         return cropService.getSelectCrop(cropCode);
     }
 
     //Get All Crop
     @GetMapping(value = "allCrops", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops() {
+        log.info("Fetching all crops");
         return cropService.getAllCrops();
     }
 
