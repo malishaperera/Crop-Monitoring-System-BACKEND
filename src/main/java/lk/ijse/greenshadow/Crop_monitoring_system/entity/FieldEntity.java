@@ -2,6 +2,7 @@ package lk.ijse.greenshadow.Crop_monitoring_system.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldLogDetailsEntity;
@@ -41,8 +42,9 @@ public class FieldEntity {
     private String fieldImage2;
 
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<CropEntity> cropList = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

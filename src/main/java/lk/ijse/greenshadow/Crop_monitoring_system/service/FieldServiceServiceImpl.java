@@ -29,7 +29,7 @@ public class FieldServiceServiceImpl implements FieldService{
 
     private final FieldRepository fieldDao;
 
-    @Autowired
+
     private final Mapping mapping;
 
     //Save Field

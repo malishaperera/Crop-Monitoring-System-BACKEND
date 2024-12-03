@@ -2,6 +2,9 @@ package lk.ijse.greenshadow.Crop_monitoring_system.dto.impl;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.StaffResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.SuperDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.Gender;
@@ -19,8 +22,11 @@ import java.util.List;
 @NoArgsConstructor
 public class StaffDTO implements SuperDTO, StaffResponse {
     private String staffMemberId;
+    @NotNull(message = "First name cannot be null")
     private String firstName;
+    @NotNull(message = "Last name cannot be null")
     private String lastName;
+    @NotNull(message = "Designation cannot be null")
     private String designation;
     private Gender gender;
     private Date joinedDate;
@@ -31,7 +37,9 @@ public class StaffDTO implements SuperDTO, StaffResponse {
     private String addressLine3;
     private String addressLine4;
     private String addressLine5;
+    @Pattern(regexp = "^[0-9]{10}$", message = "Contact number must be a valid 10 digit number")
     private String contactNo;
+    @Email(message = "Email should be valid")
     private String email;
     private Role role;
 
@@ -39,10 +47,6 @@ public class StaffDTO implements SuperDTO, StaffResponse {
     private String equipmentId;
     private List<String> vehicleCodes = new ArrayList<>();
 
-
-    //Associate
-//    private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
-//    private List<StaffLogDetailsEntity> staffLogDetailsList = new ArrayList<>();
     private List<String> fieldCode =  new ArrayList<>();
     private List<String> logCodes = new ArrayList<>();
 }

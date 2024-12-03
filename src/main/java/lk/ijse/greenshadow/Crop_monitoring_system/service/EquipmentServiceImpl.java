@@ -3,8 +3,6 @@ package lk.ijse.greenshadow.Crop_monitoring_system.service;
 import jakarta.transaction.Transactional;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentErrorResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentResponse;
-import lk.ijse.greenshadow.Crop_monitoring_system.exception.FieldNotFoundException;
-import lk.ijse.greenshadow.Crop_monitoring_system.exception.StaffNotFoundException;
 import lk.ijse.greenshadow.Crop_monitoring_system.repository.EquipmentRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.repository.FieldRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.repository.StaffRepository;

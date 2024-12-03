@@ -16,4 +16,7 @@ public interface FieldRepository extends JpaRepository<FieldEntity, String> {
     FieldEntity getFieldEntityByFieldCode(String fieldCode);
 
     FieldEntity findByFieldCode(String fieldCode);
+
+    //custom
+    List<FieldEntity> findByFieldCodeIn(List<String> fieldCodes);
 }

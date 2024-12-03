@@ -14,5 +14,5 @@ public interface VehicleService {
 
     VehicleResponse getSelectVehicle(String vehicleCode);
 
-    List<VehicleDTO> getAllStaffs();
+    List<VehicleDTO> getAllVehicle();
 }

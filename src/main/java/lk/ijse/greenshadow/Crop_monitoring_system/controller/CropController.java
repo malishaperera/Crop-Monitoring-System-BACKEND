@@ -118,4 +118,12 @@ public class CropController {
     public List<CropDTO> getAllCrops() {
         return cropService.getAllCrops();
     }
+
+
+    //custom getAll crop codes
+//    @GetMapping(value = "/crops/allCropsCodes", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<String>> getAllCropsCode() {
+//        List<String> cropCodes = cropService.getAllCropsCods();
+//        return ResponseEntity.ok(cropCodes);
+//    }
 }

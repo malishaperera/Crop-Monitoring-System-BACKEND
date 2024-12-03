@@ -1,6 +1,6 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.CropLogDetailsEntity;
 import lombok.AllArgsConstructor;
@@ -35,12 +35,11 @@ public class CropEntity {
     @Column(name = "crop_season")
     private String cropSeason;
 
-    // Many-to-one relationship with FieldEntity, nullable to allow removal
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+           // (fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private FieldEntity field;
-
 
     @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CropLogDetailsEntity> cropLogDetailsList = new ArrayList<>();

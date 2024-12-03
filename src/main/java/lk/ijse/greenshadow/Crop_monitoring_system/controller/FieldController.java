@@ -17,11 +17,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/fields")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://127.0.0.1:5502", "http://localhost:5502"}) // Allow specific origins
 public class FieldController {
 
     private static final Logger logger = LoggerFactory.getLogger(FieldController.class);
@@ -44,8 +50,8 @@ public class FieldController {
             @RequestParam("fieldName") String fieldName,
             @RequestParam("fieldLocation") String  fieldLocation,
             @RequestParam("fieldSize") double fieldSize,
-            @RequestParam("fieldImage1") MultipartFile fieldImage1,
-            @RequestParam("fieldImage2") MultipartFile fieldImage2) {
+            @RequestParam(value = "fieldImage1",required = false) MultipartFile fieldImage1,
+            @RequestParam(value = "fieldImage2",required = false) MultipartFile fieldImage2) {
         try {
             logger.info("Received request to save field: {}", fieldName);
 
@@ -77,7 +83,9 @@ public class FieldController {
         }
     }
 
+
     //Update Field
+//    @PutMapping(value = "/{fieldCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PatchMapping(value = "/{fieldCode}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateField(
             @PathVariable("fieldCode") String fieldCode,
@@ -142,6 +150,7 @@ public class FieldController {
     //Get Field
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public FieldResponse getSelectedField(@PathVariable("id") String fieldCode){
+        System.out.println("meka"+ fieldCode);
         logger.info("Received request to fetch field details for code: {}", fieldCode);
         return fieldService.getSelectField(fieldCode);
     }
@@ -152,4 +161,15 @@ public class FieldController {
         logger.info("Received request to fetch all fields");
         return fieldService.getAllFields();
     }
+
+
+//
+//    private String convertImageToBase64(String imagePath) throws IOException {
+//        // Read image file
+//        Path path = Paths.get(imagePath);
+//        byte[] imageBytes = Files.readAllBytes(path);
+//
+//        // Convert the byte array to a Base64 string
+//        return Base64.getEncoder().encodeToString(imageBytes);
+//    }
 }

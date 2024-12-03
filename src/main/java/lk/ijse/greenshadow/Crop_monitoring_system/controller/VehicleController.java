@@ -5,7 +5,6 @@ import lk.ijse.greenshadow.Crop_monitoring_system.customObj.VehicleResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.VehicleDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.VehicleNotFoundException;
-import lk.ijse.greenshadow.Crop_monitoring_system.service.StaffService;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +67,22 @@ public class VehicleController {
         }
     }
 
+
+//    @PatchMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Void> updateVehicle(@PathVariable("vehicleCode") String vehicleCode, @RequestBody VehicleDTO vehicleDTO) {
+//        try {
+//            if (vehicleDTO == null) {
+//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vehicle cannot be null");
+//            }
+//            vehicleService.updateVehicle(vehicleCode, vehicleDTO); // Ensure vehicleService logic works as expected
+//            return new ResponseEntity<>(HttpStatus.OK); // Return 200 OK for successful update
+//        } catch (VehicleNotFoundException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Handle not found
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Handle other errors
+//        }
+//    }
+
     //Delete Vehicle
     @DeleteMapping(value = "/{vehicleCode}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode){
@@ -90,6 +105,6 @@ public class VehicleController {
     //Get All Vehicle
     @GetMapping(value = "allVehicles", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VehicleDTO> getAllVehicle(){
-        return vehicleService.getAllStaffs();
+        return vehicleService.getAllVehicle();
     }
 }

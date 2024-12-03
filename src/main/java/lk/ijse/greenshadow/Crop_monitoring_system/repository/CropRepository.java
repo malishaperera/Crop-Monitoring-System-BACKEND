@@ -15,4 +15,8 @@ public interface CropRepository extends JpaRepository<CropEntity, String> {
     List<String> findLastCropCode();
 
     CropEntity getCropEntityByCropCode(String cropCode);
+
+    //custom
+    List<CropEntity> findByCropCodeIn(List<String> cropCodes);
+
 }

@@ -33,59 +33,165 @@ public class MonitoringLogController {
 
     /**To Do CRUD Operation**/
     //MonitoringLog save
+//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<String> saveMonitoringLog(
+//            @RequestParam("logObservation") String logObservation,
+//            @RequestParam("observedImage") MultipartFile observedImage,
+//            @RequestParam("fieldCodes") List<String> fieldCodes,
+//            @RequestParam("staffMemberIds") List<String> staffMemberIds,
+//            @RequestParam("cropCodes") List<String> cropCodes) {
+//        try {
+//            byte[] imageBytes = observedImage.getBytes();
+//            String base64Image = AppUtil.toBase64ProfilePic(imageBytes);
+//
+//            MonitoringLogDTO monitoringLogDTO = new MonitoringLogDTO();
+//            monitoringLogDTO.setLogDate(new Date());
+//            monitoringLogDTO.setLogObservation(logObservation);
+//            monitoringLogDTO.setObservedImage(base64Image);
+//            monitoringLogDTO.setFieldCodes(fieldCodes);
+//            monitoringLogDTO.setStaffMemberIds(staffMemberIds);
+//            monitoringLogDTO.setCropCodes(cropCodes);
+//
+//            monitoringLogService.saveMonitoringLog(monitoringLogDTO);
+//
+//            return new ResponseEntity<>(HttpStatus.CREATED);
+//        } catch (DataPersistFailedException e) {
+//            return new ResponseEntity<>("Data persist failed: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> saveMonitoringLog(
+    public ResponseEntity<?> saveMonitoringLog(
             @RequestParam("logObservation") String logObservation,
-            @RequestParam("observedImage") MultipartFile observedImage) {
+            @RequestParam(value = "observedImage", required = false) MultipartFile observedImage,
+            @RequestParam("fieldCodes") List<String> fieldCodes,
+            @RequestParam("staffMemberIds") List<String> staffMemberIds,
+            @RequestParam("cropCodes") List<String> cropCodes) {
+
         try {
-            byte[] imageBytes = observedImage.getBytes();
-            String base64Image = AppUtil.toBase64ProfilePic(imageBytes);
+//            if (fieldCodes.isEmpty() && cropCodes.isEmpty()) {
+//                return ResponseEntity.badRequest().body("Field codes or crop codes must be provided.");
+//            }
+            // Validate fieldCodes and cropCodes
+            if (fieldCodes.isEmpty()) {
+                return ResponseEntity.badRequest().body("Field codes must be provided.");
+            }
+
+            if (cropCodes.isEmpty()) {
+                return ResponseEntity.badRequest().body("Crop codes must be provided.");
+            }
+
+            if (staffMemberIds.isEmpty()) {
+                return ResponseEntity.badRequest().body("Staff member IDs must be provided.");
+            }
+
+            String base64Image = null;
+            if (observedImage != null && !observedImage.isEmpty()) {
+                byte[] imageBytes = observedImage.getBytes();
+                base64Image = AppUtil.toBase64ProfilePic(imageBytes);
+            }
 
             MonitoringLogDTO monitoringLogDTO = new MonitoringLogDTO();
-            monitoringLogDTO.setLogDate(new Date()); // Current date
+            monitoringLogDTO.setLogDate(new Date());
             monitoringLogDTO.setLogObservation(logObservation);
             monitoringLogDTO.setObservedImage(base64Image);
+            monitoringLogDTO.setFieldCodes(fieldCodes);
+            monitoringLogDTO.setStaffMemberIds(staffMemberIds);
+            monitoringLogDTO.setCropCodes(cropCodes);
 
             monitoringLogService.saveMonitoringLog(monitoringLogDTO);
 
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Monitoring log saved successfully.");
         } catch (DataPersistFailedException e) {
-            return new ResponseEntity<>("Data persist failed: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data persist failed: " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
         }
     }
-
 
     //Update Monitoring
-    @PatchMapping(value = "/{logCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> updateMonitoringLog(
-            @PathVariable("logCode") String logCode,
-            @RequestParam("logObservation") String logObservation,
-            @RequestParam("observedImage") MultipartFile observedImage) {
+//    @PatchMapping(value = "/{logCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<Void> updateMonitoringLog(
+//            @PathVariable("logCode") String logCode,
+//            @RequestParam("logObservation") String logObservation,
+//            @RequestParam("observedImage") MultipartFile observedImage) {
+//
+//
+//        try {
+//            byte[] imageBytes = observedImage.getBytes();
+//            String base64Image = AppUtil.toBase64ProfilePic(imageBytes);
+//
+//            MonitoringLogDTO updateMonitoringLogDTO = new MonitoringLogDTO();
+////            monitoringLogDTO.setLogDate(new Date());
+//            updateMonitoringLogDTO.setLogCode(logCode);
+//            updateMonitoringLogDTO.setLogObservation(logObservation);
+//            updateMonitoringLogDTO.setObservedImage(base64Image);
+//
+//            monitoringLogService.updateMonitoringLog(updateMonitoringLogDTO);
+//
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        } catch (DataPersistFailedException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
-        try {
-            byte[] imageBytes = observedImage.getBytes();
-            String base64Image = AppUtil.toBase64ProfilePic(imageBytes);
+        @PatchMapping(value = "/{logCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+        public ResponseEntity<Void> updateMonitoringLog(
+                @PathVariable("logCode") String logCode,
+                @RequestParam("logObservation") String logObservation,
+                @RequestParam(value = "observedImage", required = false) MultipartFile observedImage,
+                @RequestParam(value = "fieldCodes", required = false) List<String> fieldCodes,
+                @RequestParam(value = "staffMemberIds", required = false) List<String> staffMemberIds,
+                @RequestParam(value = "cropCodes", required = false) List<String> cropCodes) {
 
-            MonitoringLogDTO updateMonitoringLogDTO = new MonitoringLogDTO();
-//            monitoringLogDTO.setLogDate(new Date());
-            updateMonitoringLogDTO.setLogCode(logCode);
-            updateMonitoringLogDTO.setLogObservation(logObservation);
-            updateMonitoringLogDTO.setObservedImage(base64Image);
+            try {
+                String base64Image = null;
+                if (observedImage != null && !observedImage.isEmpty()) {
+                    byte[] imageBytes = observedImage.getBytes();
+                    String base64Images    = base64Image = AppUtil.toBase64ProfilePic(imageBytes);
+                    System.out.println("Base64 Image: " + base64Image);
+                }else {
+                    System.out.println("No image bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.");
+                }
 
-            monitoringLogService.updateMonitoringLog(updateMonitoringLogDTO);
+                MonitoringLogDTO updateMonitoringLogDTO = new MonitoringLogDTO();
+                updateMonitoringLogDTO.setLogCode(logCode);
+                updateMonitoringLogDTO.setLogObservation(logObservation);
+                updateMonitoringLogDTO.setObservedImage(base64Image);
 
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataPersistFailedException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                // Optional fields for updating associations
+                if (fieldCodes != null && !fieldCodes.isEmpty()) {
+                    updateMonitoringLogDTO.setFieldCodes(fieldCodes);
+                }
+
+                if (staffMemberIds != null && !staffMemberIds.isEmpty()) {
+                    updateMonitoringLogDTO.setStaffMemberIds(staffMemberIds);
+                }
+
+                if (cropCodes != null && !cropCodes.isEmpty()) {
+                    updateMonitoringLogDTO.setCropCodes(cropCodes);
+                }
+
+                // Call service to update the monitoring log and its associated entities
+                monitoringLogService.updateMonitoringLog(updateMonitoringLogDTO);
+
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (DataPersistFailedException e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
-    }
 
     //MonitoringLog update
     @DeleteMapping("/{id}")

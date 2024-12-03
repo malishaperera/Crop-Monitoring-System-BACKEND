@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -107,6 +108,17 @@ public class CropServiceImpl implements CropService {
     @Override
     public List<CropDTO> getAllCrops() {
         List<CropEntity> getAllCrops = cropRepository.findAll();
+        System.out.println("Retrieved Crops: " + getAllCrops.size());
         return mapping.convertToCropDTOList(getAllCrops);
     }
+
+    //custom getAllCropCode
+//    @Override
+//    public List<String> getAllCropsCods() {
+//        List<CropEntity> allCrops = cropRepository.findAll();
+//        return allCrops.stream()
+//                .map(CropEntity::getCropCode)
+//                .collect(Collectors.toList());
+//    }
+
 }
