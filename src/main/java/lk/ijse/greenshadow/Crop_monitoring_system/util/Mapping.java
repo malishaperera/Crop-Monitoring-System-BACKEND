@@ -162,15 +162,6 @@ public class Mapping {
         return dto;
     }
 
-
-
-
-
-
-
-
-
-
     // MonitoringLogDTO to MonitoringLogEntity
     public MonitoringLogEntity convertToMonitoringLogEntity(MonitoringLogDTO dto) {
         return modelMapper.map(dto, MonitoringLogEntity.class);

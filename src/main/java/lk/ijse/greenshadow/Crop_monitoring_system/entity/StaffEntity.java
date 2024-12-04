@@ -83,8 +83,8 @@ public class StaffEntity {
     private List<VehicleEntity> vehicleList = new ArrayList<>();
 
 
-//    @OneToOne(mappedBy = "staff", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private UserEntity user;
+    @OneToOne(mappedBy = "staff", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private UserEntity user;
 
     //Associate
 
