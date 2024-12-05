@@ -36,6 +36,7 @@ public class AppUtil {
         return Base64.getEncoder().encodeToString(profilePic);
     }
 
+
     // Staff ID Generate
     public static String generateNextStaffId(String lastStaffId) {
         if (lastStaffId != null && lastStaffId.startsWith("STAFF-")) {

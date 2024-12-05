@@ -7,6 +7,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldLogDet
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldStaffDetailsEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.StaffLogDetailsEntity;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -190,5 +191,20 @@ public class Mapping {
         return equipmentList.stream()
                 .map(this::convertToEquipmentDTO)
                 .toList();
+    }
+
+
+    /*------------------------------------------------USER---------------------------------------------------*/
+
+    public UserEntity convertToUserEntity(UserDTO userDTO) {
+        return modelMapper.map(userDTO, UserEntity.class);
+    }
+
+    public UserDTO convertToUserDTO(UserEntity userEntity) {
+        return modelMapper.map(userEntity, UserDTO.class);
+    }
+    public List<UserDTO> convertUserToDTOList(List<UserEntity> userEntities) {
+//        return modelMapper.map(userEntities, List.class);
+        return modelMapper.map(userEntities, new TypeToken<List<UserDTO>>() {}.getType());
     }
 }

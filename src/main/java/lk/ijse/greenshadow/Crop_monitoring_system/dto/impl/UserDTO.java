@@ -19,9 +19,13 @@ public class UserDTO implements SuperDTO {
     @NotNull(message = "Email cannot be null")
     @Email(message = "Email should be valid")
     private String email;
+
     @NotNull(message = "Password cannot be null")
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
+
+    private String staffMemberId;
+
     @NotNull(message = "Role cannot be null")
     private Role role;
 }
