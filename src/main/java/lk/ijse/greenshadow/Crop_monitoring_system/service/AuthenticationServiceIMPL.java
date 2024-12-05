@@ -1,8 +1,10 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.service;
 
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.UserDTO;
+import lk.ijse.greenshadow.Crop_monitoring_system.entity.UserEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.jwtModels.JwtAuthResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.jwtModels.SignIn;
+import lk.ijse.greenshadow.Crop_monitoring_system.repository.StaffRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.repository.UserRepository;
 import lk.ijse.greenshadow.Crop_monitoring_system.util.Mapping;
 
@@ -20,6 +22,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
     private final UserRepository userDao;
     private final JWTService jwtService;
     private final Mapping mapping;
+    private final StaffRepository staffDao;
 
     private final AuthenticationManager authenticationManager;
 
@@ -35,8 +38,23 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
 
     @Override
     public JwtAuthResponse signUp(UserDTO signUpUser) {
-        var savedUser = userDao.save(mapping.convertToUserEntity(signUpUser));
+        // Validate and fetch the staff member
+        var staffMember = staffDao.findById(signUpUser.getStaffMemberId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid staff member ID"));
+
+        // Build UserEntity with staff association and role from StaffEntity
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(signUpUser.getEmail());
+        userEntity.setPassword(signUpUser.getPassword());
+        userEntity.setRole(staffMember.getRole()); // Assign role from staff
+        userEntity.setStaff(staffMember);
+
+        // Save the user
+        var savedUser = userDao.save(userEntity);
+
+        // Generate JWT token
         var genToken = jwtService.generateToken(savedUser);
+
         return JwtAuthResponse.builder().token(genToken).build();
     }
 

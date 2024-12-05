@@ -5,7 +5,6 @@ import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedExc
 import lk.ijse.greenshadow.Crop_monitoring_system.jwtModels.JwtAuthResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.jwtModels.SignIn;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.AuthenticationService;
-import lk.ijse.greenshadow.Crop_monitoring_system.util.AppUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -25,25 +24,16 @@ public class AuthController {
 
     @PostMapping(value = "signup",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<JwtAuthResponse> signUp(
-            @RequestPart("firstName") String firstName,
-            @RequestPart ("lastName") String lastName,
             @RequestPart ("email") String email,
             @RequestPart ("password") String password,
-            @RequestPart ("profilePic") MultipartFile profilePic,
-            @RequestPart ("Role") String role) {
+            @RequestPart ("staffMemberId") String staffMemberId) {
         try {
-            // Handle profile picture
-            String base64ProfilePic = AppUtil.toBase64ProfilePic(profilePic);
 
             // build the user
             UserDTO buildUserDTO = new UserDTO();
-            buildUserDTO.setUserId(AppUtil.createUserId());
-            buildUserDTO.setFirstName(firstName);
-            buildUserDTO.setLastName(lastName);
             buildUserDTO.setEmail(email);
+            buildUserDTO.setStaffMemberId(staffMemberId);
             buildUserDTO.setPassword(passwordEncoder.encode(password));
-            buildUserDTO.setProfilePicture(base64ProfilePic);
-            buildUserDTO.setRole(role);
             //send to the service layer
             return ResponseEntity.ok(authenticationService.signUp(buildUserDTO));
         }catch (DataPersistFailedException e){
@@ -52,6 +42,7 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PostMapping(value = "signin")
     public ResponseEntity<JwtAuthResponse> signIn(@RequestBody SignIn signIn) {
