@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -151,6 +152,7 @@ public class FieldController {
         return fieldService.getSelectField(fieldCode);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     //Get All Field
     @GetMapping(value = "allFields", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FieldDTO> getAllFields() {

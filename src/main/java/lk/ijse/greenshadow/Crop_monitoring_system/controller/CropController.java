@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/v1/crops")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = {"http://127.0.0.1:5502", "http://localhost:5502"}) // Allow specific origins
 public class CropController {
     private final CropService cropService;
 
@@ -128,6 +130,7 @@ public class CropController {
     }
 
     //Get All Crop
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "allCrops", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops() {
         log.info("Fetching all crops");

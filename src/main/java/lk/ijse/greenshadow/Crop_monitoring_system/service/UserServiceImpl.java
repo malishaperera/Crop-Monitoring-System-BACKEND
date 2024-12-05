@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.UserErrorResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.UserResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.UserDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.UserEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.UserNotFoundException;
@@ -107,6 +106,3 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 }
-
-
-
