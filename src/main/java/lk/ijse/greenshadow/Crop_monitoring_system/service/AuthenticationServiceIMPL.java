@@ -14,14 +14,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 
 public class AuthenticationServiceIMPL implements AuthenticationService {
-
 
     private final UserRepository userDao;
     private final JWTService jwtService;
@@ -71,7 +70,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
             UserEntity userEntity = new UserEntity();
             userEntity.setEmail(signUpUser.getEmail());
             userEntity.setPassword(signUpUser.getPassword());
-            userEntity.setRole(staffMember.getRole());  // Assign role from staff
+            userEntity.setRole(staffMember.getRole());
             userEntity.setStaff(staffMember);
 
             // Save the user

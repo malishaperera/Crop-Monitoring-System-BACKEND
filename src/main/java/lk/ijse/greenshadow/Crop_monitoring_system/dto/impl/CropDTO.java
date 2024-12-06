@@ -7,13 +7,10 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.CropResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.SuperDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.CropLogDetailsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -45,8 +42,3 @@ public class CropDTO implements SuperDTO, CropResponse {
     @NotNull(message = "Field code cannot be null")
     private String fieldCode;
 }
-
-
-//Associate
-//    private List<CropLogDetailsEntity> cropLogDetailsList = new ArrayList<>();
-//    private List<String> cropLogDetailsList = new ArrayList<>();

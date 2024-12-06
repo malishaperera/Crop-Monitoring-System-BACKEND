@@ -85,7 +85,6 @@ public class VehicleServiceImpl implements VehicleService {
             vehicleEntity.setStaff(byStaffMemberId);
             vehicleDao.save(vehicleEntity);
             log.info("Vehicle updated successfully with code: {}", vehicleCode);
-
         }
     }
 

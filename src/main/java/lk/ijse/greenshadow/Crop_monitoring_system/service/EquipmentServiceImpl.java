@@ -32,11 +32,8 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Autowired
     private final Mapping mapping;
-
     private final EquipmentRepository equipmentDao;
-
     private final FieldRepository fieldDao;
-
     private final StaffRepository staffDao;
 
     @Override

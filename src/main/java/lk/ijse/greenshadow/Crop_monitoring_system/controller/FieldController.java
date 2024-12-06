@@ -41,7 +41,6 @@ public class FieldController {
 
     /**To Do CRUD Operation**/
     //Save Field
-
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> saveField(
             @RequestParam("fieldName") String fieldName,
@@ -159,7 +158,6 @@ public class FieldController {
         logger.info("Received request to fetch all fields");
         return fieldService.getAllFields();
     }
-
 
 //
 //    private String convertImageToBase64(String imagePath) throws IOException {

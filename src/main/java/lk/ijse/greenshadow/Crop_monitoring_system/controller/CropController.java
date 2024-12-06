@@ -35,6 +35,7 @@ public class CropController {
     /**To Do CRUD Operation**/
 
     //Save Crop
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> saveCrop(
             @RequestParam("cropCommonName") String cropCommonName,
@@ -71,6 +72,7 @@ public class CropController {
     }
 
     // Update Crop
+//    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping(value = "/{cropCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateCrop(
             @PathVariable("cropCode") String cropCode,
@@ -106,6 +108,8 @@ public class CropController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCrop(@PathVariable("id") String cropCode) {
         try {
@@ -123,6 +127,7 @@ public class CropController {
     }
 
     //Get Crop
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CropResponse getSelectedCrop(@PathVariable("id") String cropCode){
         log.info("Fetching crop with code: {}", cropCode);
@@ -130,7 +135,7 @@ public class CropController {
     }
 
     //Get All Crop
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "allCrops", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops() {
         log.info("Fetching all crops");

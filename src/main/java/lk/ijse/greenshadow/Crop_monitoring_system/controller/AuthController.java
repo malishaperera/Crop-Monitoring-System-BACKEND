@@ -31,10 +31,6 @@ public class AuthController {
             @RequestPart ("staffMemberId") String staffMemberId) {
         try {
 
-            System.out.println("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"+email);
-
-
-
             // build the user
             UserDTO buildUserDTO = new UserDTO();
             buildUserDTO.setEmail(email);
