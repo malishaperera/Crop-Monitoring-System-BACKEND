@@ -43,6 +43,7 @@ public class CropController {
             @RequestParam("fieldCode") String fieldCode){
 
         try {
+
             log.info("Saving crop: {} (Common Name: {}, Scientific Name: {})", cropCommonName, cropCommonName, cropScientificName);
             byte[] imageByteCollection1 = cropImage.getBytes();
             String base64ProfilePic1 = AppUtil.toBase64ProfilePic(imageByteCollection1);
