@@ -22,15 +22,6 @@ public class AppUtil {
         return "CROP-001";
     }
 
-//    public static String generateNextEquipmentId(String lastEquipmentId) {
-//        if (lastEquipmentId != null && lastEquipmentId.startsWith("EQI-")) {
-//            int lastIdNumber = Integer.parseInt(lastEquipmentId.substring(4));
-//            return String.format("EQI-%03d", lastIdNumber + 1);
-//        }
-//        return "EQI-001";
-//    }
-
-
     public static String toBase64ProfilePic(byte[] profilePic) {
         // Convert image bytes to Base64 string
         return Base64.getEncoder().encodeToString(profilePic);
@@ -74,5 +65,4 @@ public class AppUtil {
         }
         return "EQI-001";
     }
-
 }

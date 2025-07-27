@@ -36,7 +36,6 @@ public class CropEntity {
     private String cropSeason;
 
     @ManyToOne
-           // (fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private FieldEntity field;

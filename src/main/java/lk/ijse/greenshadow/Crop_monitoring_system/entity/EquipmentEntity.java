@@ -25,7 +25,6 @@ public class EquipmentEntity {
     @Column(name = "availability_status")
     private Status status;
 
-
     @ManyToOne
     @JoinColumn(name = "field_code")
     private FieldEntity field;

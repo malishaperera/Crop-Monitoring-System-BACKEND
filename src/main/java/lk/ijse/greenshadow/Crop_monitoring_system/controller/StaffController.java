@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,10 +31,10 @@ public class StaffController {
         return "Staff is running";
     }
 
-
     /**To Do CRUD Operation**/
 
     //Save Staff
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveStaff(@RequestBody StaffDTO staffDTO){
         log.info("Received request to save staff with data: {}", staffDTO);
@@ -56,6 +57,7 @@ public class StaffController {
     }
 
     //Update Staff
+    @PreAuthorize("hasRole('MANAGER') or (hasRole('ADMINISTRATIVE') and @staffSecurityService.canEditStaff(#staffMemberId, #staff))")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{staffMemberId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateStaff(@PathVariable("staffMemberId") String staffMemberId , @RequestBody StaffDTO staff){
@@ -78,6 +80,7 @@ public class StaffController {
     }
 
     //Delete Staff
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping(value = "/{staffMemberId}")
     public ResponseEntity<Void> deleteStaff(@PathVariable("staffMemberId") String staffMemberId){
         log.info("Received request to delete staff with ID: {}", staffMemberId);
@@ -95,6 +98,7 @@ public class StaffController {
     }
 
     //Get Staff
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "/{staffMemberId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StaffResponse getSelectStaff(@PathVariable("staffMemberId") String staffMemberId){
         log.info("Received request to get staff with ID: {}", staffMemberId);
@@ -102,6 +106,7 @@ public class StaffController {
     }
 
     //Get All Staff
+//    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "allStaffs", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StaffDTO> getAllStaffs(){
         return staffService.getAllStaffs();

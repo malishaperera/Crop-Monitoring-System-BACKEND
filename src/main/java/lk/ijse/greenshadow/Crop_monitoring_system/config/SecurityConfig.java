@@ -4,6 +4,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,6 +18,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
@@ -30,18 +36,25 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //frontend req eka allagena
-        http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests( req ->
-                        req.requestMatchers("api/v1/auth/**").permitAll()
-                                .anyRequest()
-                                .authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtConfigFilter, UsernamePasswordAuthenticationFilter.class);
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
+                .authorizeRequests(req ->
+                        req
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS requests අවසර දෙන්න
+                                .requestMatchers(
+                                        "/api/v1/auth/**",
+                                        "/api/v1/staffs/allStaffs"
+                                ).permitAll()
+                                .anyRequest().authenticated()
+                )
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Use stateless session management (no sessions)
+                )
+                .authenticationProvider(authenticationProvider()) // Provide custom authentication provider
+                .addFilterBefore(jwtConfigFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter before the authentication filter
         return http.build();
     }
-
     //Password encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -63,4 +76,18 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+//    http://127.0.0.1:5502/
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://127.0.0.1:5502");
+        configuration.addAllowedMethod("*");  // Allow all HTTP methods (GET, POST, PUT, DELETE)
+        configuration.addAllowedHeader("*");  // Allow all headers
+        configuration.setAllowCredentials(true); // Allow credentials like cookies, authorization headers
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);  // Apply to all endpoints
+        return source;
+    }
+
 }

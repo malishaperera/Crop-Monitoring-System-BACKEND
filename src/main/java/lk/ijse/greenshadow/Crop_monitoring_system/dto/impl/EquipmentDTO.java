@@ -4,8 +4,6 @@ package lk.ijse.greenshadow.Crop_monitoring_system.dto.impl;
 import jakarta.validation.constraints.NotNull;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.EquipmentResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.SuperDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.FieldEntity;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.EquipmentTypes;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.enums.Status;
 import lombok.AllArgsConstructor;

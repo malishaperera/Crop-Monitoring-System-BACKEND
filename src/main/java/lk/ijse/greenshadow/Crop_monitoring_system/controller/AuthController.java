@@ -6,6 +6,7 @@ import lk.ijse.greenshadow.Crop_monitoring_system.jwtModels.JwtAuthResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.jwtModels.SignIn;
 import lk.ijse.greenshadow.Crop_monitoring_system.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
     private final AuthenticationService authenticationService;
@@ -24,11 +26,11 @@ public class AuthController {
 
     @PostMapping(value = "signup",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<JwtAuthResponse> signUp(
+
             @RequestPart ("email") String email,
             @RequestPart ("password") String password,
             @RequestPart ("staffMemberId") String staffMemberId) {
         try {
-
             // build the user
             UserDTO buildUserDTO = new UserDTO();
             buildUserDTO.setEmail(email);
@@ -44,13 +46,16 @@ public class AuthController {
     }
 
 
+
     @PostMapping(value = "signin")
     public ResponseEntity<JwtAuthResponse> signIn(@RequestBody SignIn signIn) {
+        log.info("User attempting to sign in with email: {}", signIn.getEmail());
         return ResponseEntity.ok(authenticationService.signIn(signIn));
     }
 
     @PostMapping("refresh")
     public ResponseEntity<JwtAuthResponse> refreshToken (@RequestParam ("refreshToken") String refreshToken) {
+        log.info("Refreshing token for refresh token: {}", refreshToken);
         return ResponseEntity.ok(authenticationService.refreshToken(refreshToken));
     }
 }

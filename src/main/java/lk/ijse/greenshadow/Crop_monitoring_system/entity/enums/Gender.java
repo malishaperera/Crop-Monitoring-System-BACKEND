@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum Gender {
     MALE,FEMALE,OTHER;
-//Male,Female,Other
 
     @JsonCreator
     public static Gender fromValue(String value) {
@@ -15,5 +14,4 @@ public enum Gender {
         }
         throw new IllegalArgumentException("Invalid Gender value: " + value);
     }
-
 }

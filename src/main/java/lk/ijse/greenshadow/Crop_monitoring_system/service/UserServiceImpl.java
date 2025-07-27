@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.UserErrorResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.UserResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.UserDTO;
-import lk.ijse.greenshadow.Crop_monitoring_system.entity.StaffEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.UserEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.UserNotFoundException;
@@ -26,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final StaffRepository staffRepository;
+//    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private final Mapping mapping;
@@ -69,6 +69,36 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
     }
 
+//    @Override
+//    public void updateUser(UserDTO userDTO) {
+//        // Retrieve the user entity by email
+//        Optional<UserEntity> optionalUserEntity = userRepository.findById(userDTO.getEmail());
+//        if (!optionalUserEntity.isPresent()) {
+//            throw new UserNotFoundException("User not found with email: " + userDTO.getEmail());
+//        }
+//
+//        UserEntity userEntity = optionalUserEntity.get();
+//
+//        // Update the user's role if it has changed
+//        if (userDTO.getRole() != null && !userDTO.getRole().equals(userEntity.getRole())) {
+//            userEntity.setRole(userDTO.getRole());
+//
+//            // Update the role in StaffEntity if the user is linked to a staff member
+//            if (userEntity.getStaff() != null) {
+//                staffRepository.updateRoleByStaffMemberId(userDTO.getRole().name(), userDTO.getStaffMemberId());
+//            }
+//        }
+//
+//        // Only update password if a new password is provided
+//        if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+//            // Encode the new password before saving
+//            String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+//            userEntity.setPassword(encodedPassword);  // Save the encoded password
+//        }
+//
+//        // Save the updated user entity
+//        userRepository.save(userEntity);
+//    }
 
     @Override
     public void deleteUser(String email) {
@@ -107,6 +137,3 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 }
-
-
-

@@ -42,7 +42,6 @@ public class StaffEntity {
     private Date joinedDate;
 
     @Column(name = "date_of_birth")
-//    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date DOB;
 
     @Column(name = "address_line_1")
@@ -70,30 +69,21 @@ public class StaffEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
-
-
     @JsonIgnore
     @OneToOne(mappedBy = "staff")
     private EquipmentEntity equipment;
 
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @OneToMany(mappedBy = "staff")
     @JsonIgnore
     private List<VehicleEntity> vehicleList = new ArrayList<>();
-
 
     @OneToOne(mappedBy = "staff", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserEntity user;
 
     //Associate
-
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "staff")
     private List<FieldStaffDetailsEntity> fieldStaffDetailsList = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "staff")
     private List<StaffLogDetailsEntity> staffLogDetailsList = new ArrayList<>();
 }

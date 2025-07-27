@@ -124,11 +124,6 @@ public class Mapping {
     }
 
     /*------------------------------------------------MonitoringLog---------------------------------------------------*/
-    // MonitoringLogEntity to MonitoringLogDTO
-//    public MonitoringLogDTO convertToMonitoringLogDTO(MonitoringLogEntity log) {
-//        return modelMapper.map(log, MonitoringLogDTO.class);
-//    }
-
 
     public MonitoringLogDTO convertToMonitoringLogDTO(MonitoringLogEntity log) {
         MonitoringLogDTO dto = modelMapper.map(log, MonitoringLogDTO.class);
@@ -175,7 +170,6 @@ public class Mapping {
                 .toList();
     }
 
-
     /*------------------------------------------------Equipment---------------------------------------------------*/
 
 
@@ -192,7 +186,6 @@ public class Mapping {
                 .map(this::convertToEquipmentDTO)
                 .toList();
     }
-
 
     /*------------------------------------------------USER---------------------------------------------------*/
 

@@ -3,7 +3,6 @@ package lk.ijse.greenshadow.Crop_monitoring_system.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldLogDetailsEntity;
 import lk.ijse.greenshadow.Crop_monitoring_system.entity.association.FieldStaffDetailsEntity;
@@ -20,7 +19,6 @@ import java.util.List;
 @Data
 @Table(name = "fields")
 @Entity
-//@EntityListeners(FieldEntityListener.class)
 public class FieldEntity {
     @Id
     @Column(name = "field_code")
@@ -30,7 +28,7 @@ public class FieldEntity {
     private String fieldName;
 
     @Column(name = "field_location")
-    private Point fieldLocation; // Assuming Point is a valid class for your use case
+    private Point fieldLocation;
 
     @Column(name = "field_size")
     private double fieldSize;
@@ -41,13 +39,10 @@ public class FieldEntity {
     @Column(name = "field_image_2", columnDefinition = "LONGTEXT")
     private String fieldImage2;
 
-
-
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<CropEntity> cropList = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "field")
     private List<EquipmentEntity> equipmentList = new ArrayList<>();
 

@@ -1,6 +1,5 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
-
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.VehicleResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.VehicleDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,6 +32,8 @@ public class VehicleController {
         return "Vehicle is running";
     }
 
+    // SAVE VEHICLE
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveVehicle(@RequestBody VehicleDTO vehicleDTO) {
         log.info("Attempting to save vehicle with data: {}", vehicleDTO);
@@ -54,6 +56,8 @@ public class VehicleController {
         }
     }
 
+    // UPDATE VEHICLE
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @PatchMapping(value = "/{vehicleCode}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateStaff(@PathVariable("vehicleCode") String vehicleCode , @RequestBody VehicleDTO vehicleDTO){
         log.info("Attempting to update vehicle with code: {} and data: {}", vehicleCode, vehicleDTO);
@@ -76,6 +80,7 @@ public class VehicleController {
     }
 
     //Delete Vehicle
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping(value = "/{vehicleCode}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode){
         log.info("Attempting to delete vehicle with code: {}", vehicleCode);
@@ -94,6 +99,7 @@ public class VehicleController {
     }
 
     //Get Vehicle
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public VehicleResponse getSelectVehicle(@PathVariable("vehicleCode") String vehicleCode){
         log.info("Fetching details for vehicle with code: {}", vehicleCode);
@@ -101,6 +107,7 @@ public class VehicleController {
     }
 
     //Get All Vehicle
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "allVehicles", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VehicleDTO> getAllVehicle(){
         log.info("Fetching all vehicles");

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class EquipmentController {
     }
 
     //Save Equipment
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveEquipment(@RequestBody EquipmentDTO equipmentDTO){
         log.info("Saving equipment: {}", equipmentDTO.getName());
@@ -48,6 +50,7 @@ public class EquipmentController {
     }
 
     //Update Equipment
+    @PreAuthorize("hasRole('MANAGER')")
     @PatchMapping(value = "/{equipmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateEquipment(@PathVariable("equipmentId") String equipmentId, @RequestBody EquipmentDTO equipmentDTO) {
         log.info("Updating equipment with ID: {}", equipmentId);
@@ -66,6 +69,7 @@ public class EquipmentController {
     }
 
     //Delete Equipment
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping(value = "/{equipmentId}")
     public ResponseEntity<Void> deleteEquipment(@PathVariable("equipmentId") String equipmentId){
         log.info("Deleting equipment with ID: {}", equipmentId);
@@ -83,6 +87,7 @@ public class EquipmentController {
     }
 
     //Get Equipment
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EquipmentResponse getSelectEquipment(@PathVariable("id") String equipmentId){
         log.info("Fetching equipment with ID: {}", equipmentId);
@@ -90,6 +95,7 @@ public class EquipmentController {
     }
 
     //Get All Equipment
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "allEquipments", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EquipmentDTO> getAllEquipments(){
         log.info("Fetching all equipment.");

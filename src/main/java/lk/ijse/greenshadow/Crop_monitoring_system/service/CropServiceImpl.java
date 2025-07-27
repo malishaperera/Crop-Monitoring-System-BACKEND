@@ -28,11 +28,9 @@ public class CropServiceImpl implements CropService {
 
     private final CropRepository cropRepository;
 
-
     private final Mapping mapping;
 
     private final FieldRepository fieldDao;
-
 
     @Override
     public void saveCrop(CropDTO cropDTO) {
@@ -51,7 +49,6 @@ public class CropServiceImpl implements CropService {
             log.error("Field not found for fieldCode: {}", cropDTO.getFieldCode());
             throw new DataPersistFailedException("Field not found for the provided fieldCode");
         }
-
 
         CropEntity isSaveCrop = cropRepository.save(mapping.convertToCropEntity(cropDTO));
         if (isSaveCrop == null) {
@@ -126,14 +123,4 @@ public class CropServiceImpl implements CropService {
         log.info("Retrieved {} crops", getAllCrops.size());
         return mapping.convertToCropDTOList(getAllCrops);
     }
-
-    //custom getAllCropCode
-//    @Override
-//    public List<String> getAllCropsCods() {
-//        List<CropEntity> allCrops = cropRepository.findAll();
-//        return allCrops.stream()
-//                .map(CropEntity::getCropCode)
-//                .collect(Collectors.toList());
-//    }
-
 }

@@ -25,10 +25,7 @@ import java.util.Optional;
 public class FieldServiceServiceImpl implements FieldService{
 
     private static final Logger logger = LoggerFactory.getLogger(FieldServiceServiceImpl.class);
-
     private final FieldRepository fieldDao;
-
-
     private final Mapping mapping;
 
     //Save Field

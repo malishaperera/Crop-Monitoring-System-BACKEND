@@ -15,13 +15,4 @@ public enum EquipmentTypes {
         return EquipmentTypes.valueOf(value.toUpperCase());
     }
 
-//
-//    @JsonCreator
-//    public static EquipmentTypes fromString(String value) {
-//        try {
-//            return EquipmentTypes.valueOf(value.toUpperCase());
-//        } catch (IllegalArgumentException e) {
-//            return null; // or throw custom exception if needed
-//        }
-//    }
 }
