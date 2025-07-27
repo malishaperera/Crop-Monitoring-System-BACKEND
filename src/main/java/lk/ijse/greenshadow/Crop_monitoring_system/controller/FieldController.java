@@ -1,5 +1,6 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
 
+//field done
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.FieldResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.FieldDTO;
 import lk.ijse.greenshadow.Crop_monitoring_system.exception.DataPersistFailedException;
@@ -41,6 +42,7 @@ public class FieldController {
 
     /**To Do CRUD Operation**/
     //Save Field
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> saveField(
             @RequestParam("fieldName") String fieldName,
@@ -84,6 +86,7 @@ public class FieldController {
     }
 
     //Update Field
+    @PreAuthorize("hasRole('MANAGER')")
     @PatchMapping(value = "/{fieldCode}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateField(
             @PathVariable("fieldCode") String fieldCode,
@@ -128,6 +131,7 @@ public class FieldController {
     }
 
     //Delete Field
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteField(@PathVariable("id") String fieldCode) {
         logger.info("Received request to delete field with code: {}", fieldCode);
@@ -145,27 +149,18 @@ public class FieldController {
     }
 
     //Get Field
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public FieldResponse getSelectedField(@PathVariable("id") String fieldCode){
         logger.info("Received request to fetch field details for code: {}", fieldCode);
         return fieldService.getSelectField(fieldCode);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     //Get All Field
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "allFields", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FieldDTO> getAllFields() {
         logger.info("Received request to fetch all fields");
         return fieldService.getAllFields();
     }
-
-//
-//    private String convertImageToBase64(String imagePath) throws IOException {
-//        // Read image file
-//        Path path = Paths.get(imagePath);
-//        byte[] imageBytes = Files.readAllBytes(path);
-//
-//        // Convert the byte array to a Base64 string
-//        return Base64.getEncoder().encodeToString(imageBytes);
-//    }
 }

@@ -1,5 +1,5 @@
 package lk.ijse.greenshadow.Crop_monitoring_system.controller;
-
+//All Done
 
 import lk.ijse.greenshadow.Crop_monitoring_system.customObj.CropResponse;
 import lk.ijse.greenshadow.Crop_monitoring_system.dto.impl.CropDTO;
@@ -35,7 +35,7 @@ public class CropController {
     /**To Do CRUD Operation**/
 
     //Save Crop
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> saveCrop(
             @RequestParam("cropCommonName") String cropCommonName,
@@ -72,7 +72,7 @@ public class CropController {
     }
 
     // Update Crop
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MANAGER')")
     @PatchMapping(value = "/{cropCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateCrop(
             @PathVariable("cropCode") String cropCode,
@@ -109,7 +109,7 @@ public class CropController {
         }
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCrop(@PathVariable("id") String cropCode) {
         try {
@@ -127,7 +127,7 @@ public class CropController {
     }
 
     //Get Crop
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'SCIENTIST')")
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CropResponse getSelectedCrop(@PathVariable("id") String cropCode){
         log.info("Fetching crop with code: {}", cropCode);
@@ -135,18 +135,10 @@ public class CropController {
     }
 
     //Get All Crop
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "allCrops", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops() {
         log.info("Fetching all crops");
         return cropService.getAllCrops();
     }
-
-
-    //custom getAll crop codes
-//    @GetMapping(value = "/crops/allCropsCodes", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<String>> getAllCropsCode() {
-//        List<String> cropCodes = cropService.getAllCropsCods();
-//        return ResponseEntity.ok(cropCodes);
-//    }
 }

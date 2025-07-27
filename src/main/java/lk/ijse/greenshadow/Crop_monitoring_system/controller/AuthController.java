@@ -26,11 +26,11 @@ public class AuthController {
 
     @PostMapping(value = "signup",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<JwtAuthResponse> signUp(
+
             @RequestPart ("email") String email,
             @RequestPart ("password") String password,
             @RequestPart ("staffMemberId") String staffMemberId) {
         try {
-
             // build the user
             UserDTO buildUserDTO = new UserDTO();
             buildUserDTO.setEmail(email);
@@ -45,24 +45,7 @@ public class AuthController {
         }
     }
 
-//    @PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<JwtAuthResponse> signUp(@RequestBody UserDTO userDTO) {
-//        log.info("Starting signup process for email: {}", userDTO.getEmail());
-//        try {
-//            // The userDTO is now directly mapped from JSON data sent by the frontend
-//            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Encrypt password
-//            log.info("Password encrypted for user: {}", userDTO.getEmail());
-//
-//            // Send to the service layer
-//            return ResponseEntity.ok(authenticationService.signUp(userDTO));
-//        } catch (DataPersistFailedException e) {
-//            log.error("Error during signup for email: {}: {}", userDTO.getEmail(), e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        } catch (Exception e) {
-//            log.error("Unexpected error during signup for email: {}: {}", userDTO.getEmail(), e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+
 
     @PostMapping(value = "signin")
     public ResponseEntity<JwtAuthResponse> signIn(@RequestBody SignIn signIn) {

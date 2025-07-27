@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,7 @@ public class MonitoringLogController {
 
     /**To Do CRUD Operation**/
     //MonitoringLog save
+    @PreAuthorize("hasAnyRole('MANAGER', 'SCIENTIST')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> saveMonitoringLog(
             @RequestParam("logObservation") String logObservation,
@@ -93,6 +95,7 @@ public class MonitoringLogController {
     }
 
     //Update Monitoring
+    @PreAuthorize("hasAnyRole('MANAGER', 'SCIENTIST')")
     @PatchMapping(value = "/{logCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateMonitoringLog(
             @PathVariable("logCode") String logCode,
@@ -145,6 +148,7 @@ public class MonitoringLogController {
     }
 
     //MonitoringLog update
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteMonitoringLog(@PathVariable("id") String logCode) {
         try {
@@ -162,6 +166,7 @@ public class MonitoringLogController {
     }
 
     //MonitoringLog Get
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public MonitoringLogResponse getSelectedMonitoringLog(@PathVariable("id") String logCode){
         log.info("Fetching monitoring log with logCode: {}", logCode);
@@ -169,6 +174,7 @@ public class MonitoringLogController {
     }
 
     //Get All MonitoringLog
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE', 'SCIENTIST')")
     @GetMapping(value = "allMonitoringLogs", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MonitoringLogDTO> getAllMonitoringLogs() {
         log.info("Fetching all monitoring logs.");
